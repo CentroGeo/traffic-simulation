@@ -11,8 +11,8 @@ parsedVehicles={}
 
 
 class OutputVehicleContentHandler(xml.sax.ContentHandler):
-    """Parsea el xml de salida de SUMO (para vtypeProbe) y construye un diccionario
-        con los vehículos (instancias de la clase Vehicle) leídos:
+    """Parsea el xml de salida de SUMO (para vtypeProbe) y construye un
+        diccionario con los vehículos (instancias de la clase Vehicle) leídos:
         parsedVehicles {'id':Vehicle}
     """
     def __init__(self):
@@ -33,7 +33,11 @@ class OutputVehicleContentHandler(xml.sax.ContentHandler):
                 esteVehicle.positions.append(attrs.get('pos'))
                 print('nuevo tiempo ' + attrs.get('id'))
             else:
-                parsedVehicles[attrs.get('id')]=Vehicle(attrs.get('id'),self.time,attrs.get('speed'),attrs.get('lane'),attrs.get('pos'))
+                parsedVehicles[attrs.get('id')]=Vehicle(attrs.get('id'),
+                                                        self.time,
+                                                        attrs.get('speed'),
+                                                        attrs.get('lane'),
+                                                        attrs.get('pos'))
                 print('nuevo vehiculo ' + attrs.get('id'))
 
     def endElement(self, name):
@@ -47,7 +51,8 @@ def main(sourceFileName):
     xml.sax.parse(source, OutputVehicleContentHandler())
     for k,v in parsedVehicles.items():
         with open("output/v_"+k,"wb") as csvfile:
-            spamwriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            spamwriter = csv.writer(csvfile, delimiter=',', quotechar='|',
+                                    quoting=csv.QUOTE_MINIMAL)
             for j,t in enumerate(v.timesteps):
                 renglon = [v.id,t,v.speeds[j]]
                 spamwriter.writerow(renglon)
