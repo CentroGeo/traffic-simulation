@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-import xlrd
+import csv
 import datetime
 import matplotlib.pyplot as plt
 import numpy as np
+import xlrd
 
 workbook = xlrd.open_workbook('data/Aforo_Eje 10_Lado-Burger_King_Dir-Pte.xls')
 worksheet = workbook.sheet_by_name('Hoja1')
@@ -23,7 +24,7 @@ for start_date in dates:
         start_time = datetime.time(9,0,0)
     else:
         start_time = datetime.time(0,0,0)
-        
+
     for i in xrange(12,num_rows):
         curr_date = xlrd.xldate_as_tuple(worksheet.cell_value(i, 0), 0)
         curr_date = datetime.date(*curr_date[:3])
@@ -37,26 +38,26 @@ for start_date in dates:
                     start_time = datetime.time(*start_time[3:])
                     intervalos.append(cuenta_coches)
                     cuenta_coches = 0
-                
+
                 if curr_time < (datetime.datetime.combine(start_date,start_time)  + delta_t).time():
                     cuenta_coches += worksheet.cell_value(i, 2)
             else:
                 #completamos la última hora
                 cuenta_coches += worksheet.cell_value(i, 2)
-    
+
     #le ponemos el último intervalo
-    intervalos.append(cuenta_coches)  
-    #completamos las listas para el primero y el último dia, así todas son de la misma longitud 
+    intervalos.append(cuenta_coches)
+    #completamos las listas para el primero y el último dia, así todas son de la misma longitud
     if start_date == datetime.date(2010,5,9):
         for i in range(0,9):
             intervalos.insert(i, 0.0)
-    
+
     if start_date == datetime.date(2010,12,9):
         for i in range(0,16):
             intervalos.append(0.0)
 
-      
-    dias.append(intervalos)        
+
+    dias.append(intervalos)
 
 #mezcalmos los dos domingos en uno solo y lo cambiamos por los dos de la lista
 primer_dom = dias[0]
@@ -67,13 +68,36 @@ domingo = primer_dom + ult_dom
 del dias[0]
 del dias[6]
 dias.insert(0, domingo)
+#promedio para dia laboral
+suma = [a+b+c+d+e for a,b,c,d,e in zip(dias[1], dias[2], dias[3], dias[3], dias[5])]
+suma = np.asarray(suma)
+promedio_laboral = suma*(1/5.0)
+#promedio_laboral = np.transpose(promedio_laboral)
+
+#lo escribimos a un archivo
+with open('output/promedio_laboral.csv', 'w') as fp:
+    a = csv.writer(fp, delimiter=',')
+    rows=[]
+    for p in promedio_laboral:
+      row=[]
+      row.append(p)
+      rows.append(row)
+      row=[]
+
+    a.writerows(rows)
+
+#suma= dias[1]
+print 'promedio_laboral:'
+print suma
+print 'lunes:'
+print dias[1]
 #sacamos los totales por dia
 totales_diarios = [sum(l) for l in dias]
-print totales_diarios
+#print totales_diarios
 
 #construimos la gráfica para los aforos por hora
 x = range(24)
-labels = [u'Domingo',u'Lunes',u'Martes',u'Miércoles',u'Jueves',u'Viernes',u'Sábado'] 
+labels = [u'Domingo',u'Lunes',u'Martes',u'Miércoles',u'Jueves',u'Viernes',u'Sábado']
 colormap = plt.cm.gist_ncar
 plt.gca().set_color_cycle([colormap(i) for i in np.linspace(0, 0.9, 8)])
 fig_1=plt.figure(1)
