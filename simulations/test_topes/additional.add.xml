@@ -2,7 +2,7 @@
 
 	<vTypeProbe id="test1" type="type1" freq="10" file="salida.xml"/>
 
-<busStop id="busstop1" lane="1fi_0" startPos="220" endPos="230"/>
+	<busStop id="busstop1" lane="1fi_0" startPos="220" endPos="230"/>
 
 
 </additional>
