@@ -19,23 +19,10 @@ for i,h in enumerate(hourly_cars):
 
 flows_writer = FlowsWriter(flows)
 flows_writer.write_xml('output/hourly_flows.xml')
-#call to duarouter: duarouter --flows=hourly_flows.xml --net=adhoc.net.xml --output-file=routes.rou.xml
+#call to duarouter:
 call(["duarouter", "--flows=output/hourly_flows.xml","--net=data/adhoc.net.xml",
     "--output-file=data/routes.rou.xml"])
 print 'done with the routes'
+#call sumo
 call(["sumo","--configuration-file=data/adhoc.sumocfg"])
 print 'done with the simulation'
-
-
-
-# if __name__ == "__main__":
-#     flow_1 = Flow('f_1','car','0','1500','1fi','1o','100','max','free',
-#                   'random')
-#     flow_2 = Flow('f_2','car','1501','3000','1fi','1o','100','max','free',
-#                   'random')
-#     flow_3 = Flow('f_3','car','0','1500','1fi','1o','150','max','free',
-#                   'random')
-#
-#     flows = [flow_1,flow_2,flow_3]
-#     flows_writer = FlowsWriter(flows)
-#     flows_writer.write_xml('output/flows.xml')
