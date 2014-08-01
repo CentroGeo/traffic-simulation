@@ -69,7 +69,8 @@ del dias[0]
 del dias[6]
 dias.insert(0, domingo)
 #promedio para dia laboral
-suma = [a+b+c+d+e for a,b,c,d,e in zip(dias[1], dias[2], dias[3], dias[3], dias[5])]
+suma = [a+b+c+d+e for a,b,c,d,e in zip(dias[1], dias[2], dias[3],
+        dias[3], dias[5])]
 suma = np.asarray(suma)
 promedio_laboral = suma*(1/5.0)
 #promedio_laboral = np.transpose(promedio_laboral)
