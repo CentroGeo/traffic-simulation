@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import xml.etree.cElementTree as ET
+from sets import Set
 from models.flow import Flow
 from models.vehicle import VehicleType
 
@@ -13,11 +14,27 @@ class FlowsWriter():
 
     def __init__(self, flows):
         self.flows = flows
+        self.v_types = Set([f.vehicle_type for f in flows])
 
     def write_xml(self,path):
         """Builds and writes the xml to the file especified in path."""
 
         root = ET.Element("flows")
+        for v in self.v_types:
+            v_type = VehicleType(v,v)
+            v_type_element = ET.SubElement(root, "vType")
+            v_type_element.set("id",v_type.id)
+            v_type_element.set("accel",v_type.accel)
+            v_type_element.set("deccel",v_type.deccel)
+            v_type_element.set("sigma",v_type.sigma)
+            v_type_element.set("length",v_type.length)
+            v_type_element.set("maxspeed",v_type.maxspeed)
+            v_type_element.set("color",v_type.color)
+            if hasattr("v_type","guiShape"):
+                v_type_element.set("guiShape",v_type.guiShape)
+
+            v_type_element.set("speedDev",v_type.speedDev)
+
         for flow in self.flows:
             interval_element = ET.SubElement(root, "interval")
             interval_element.set("begin",flow.interval_start)

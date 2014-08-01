@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import random
 
 class VehicleType():
     """Represents a SUMO vehicle type
@@ -11,14 +12,18 @@ class VehicleType():
     str maxspeed: Max speed of vehicle
     str color: color (r,g,b)
     str guiShape: The shape to be used in the gui
+    str speedDev: Standard dev for speed
     """
 
-    def __init__(self,v_type,id):
+    def __init__(self,v_type,id=None):
         """Inicializa un nuevo vehiculo con los parámetros correspondientes
            a str v_type (bus,car,other).
         """
+        if id is not None:
+            self.id = id
+        else:
+            self.id = v_type + "_" + str(random.randint(1, 100))
 
-        self.id = v_type
         if v_type == 'car':
             self.accel = "3.6"
             self.deccel = "5.6"
@@ -26,6 +31,8 @@ class VehicleType():
             self.length = "7.5"
             self.maxspeed = "120"
             self.color = "1,1,0"
+            self.speedDev = "0.1"
+            #self.guiShape = "car"
         elif v_type == 'bus':
             self.accel = "2.6"
             self.deccel = "4.5"
@@ -33,6 +40,8 @@ class VehicleType():
             self.length = "15"
             self.maxspeed = "70"
             self.color = "0,0,1"
+            self.speedDev = "0.1"
+            self.guiShape = "bus"
         else:
             self.accel = "3.6"
             self.deccel = "5.6"
@@ -40,6 +49,8 @@ class VehicleType():
             self.length = "7.5"
             self.maxspeed = "120"
             self.color = "0,1,0"
+            self.speedDev = "0.1"
+            #self.guiShape = "car"
 
 
 class OutputVehicle():
