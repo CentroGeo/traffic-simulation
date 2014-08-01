@@ -21,7 +21,11 @@ flows_writer = FlowsWriter(flows)
 flows_writer.write_xml('output/hourly_flows.xml')
 #call to duarouter: duarouter --flows=hourly_flows.xml --net=adhoc.net.xml --output-file=routes.rou.xml
 call(["duarouter", "--flows=output/hourly_flows.xml","--net=data/adhoc.net.xml",
-    "--output-file=output/routes.rou.xml"])
+    "--output-file=data/routes.rou.xml"])
+print 'done with the routes'
+call(["sumo","--configuration-file=data/adhoc.sumocfg"])
+print 'done with the simulation'
+
 
 
 # if __name__ == "__main__":
