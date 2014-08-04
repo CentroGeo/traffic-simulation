@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from sets import Set
 import xml.sax
 import csv
 from models.vehicle import OutputVehicle
@@ -7,13 +7,15 @@ from models.vehicle import OutputVehicle
 
 #time = 0
 parsed_vehicles={}
+parsed_vehicles_ids = Set()
 
 
 
 class OutputVehicleContentHandler(xml.sax.ContentHandler):
     """Parsea el xml de salida de SUMO (para vtypeProbe) y construye un
         diccionario con los vehículos (instancias de la clase OutputVehicle)
-        leídos: parsed_vehicles {'id':OutputVehicle}
+        leídos:
+        parsed_vehicles {'id':OutputVehicle}
     """
     def __init__(self):
         xml.sax.ContentHandler.__init__(self)
@@ -23,17 +25,18 @@ class OutputVehicleContentHandler(xml.sax.ContentHandler):
     def startElement(self, name, attrs):
         if name == 'timestep':
             self.time = int(float(attrs.get('time')))
-            #print(time)
+            print 'processing timestep ' + str(self.time)
         elif name == 'vehicle':
-            if attrs.get('id') in parsed_vehicles.keys():
-                esteVehicle = parsed_vehicles[attrs.get('id')]
-                esteVehicle.timesteps.append(self.time)
-                esteVehicle.speeds.append(attrs.get('speed'))
-                esteVehicle.lanes.append(attrs.get('lane'))
-                esteVehicle.positions.append(attrs.get('pos'))
-                esteVehicle.driving_cycle[self.time]=float(attrs.get('speed'))
+            if attrs.get('id') in parsed_vehicles_ids:
+                current_vehicle = parsed_vehicles[attrs.get('id')]
+                current_vehicle.timesteps.append(self.time)
+                current_vehicle.speeds.append(attrs.get('speed'))
+                current_vehicle.lanes.append(attrs.get('lane'))
+                current_vehicle.positions.append(attrs.get('pos'))
+                current_vehicle.driving_cycle[self.time]=float(attrs.get('speed'))
                 #print('nuevo tiempo ' + attrs.get('id'))
             else:
+                parsed_vehicles_ids.add(attrs.get('id'))
                 parsed_vehicles[attrs.get('id')]=OutputVehicle(
                                                         attrs.get('id'),
                                                         self.time,
