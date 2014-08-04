@@ -31,6 +31,7 @@ class OutputVehicleContentHandler(xml.sax.ContentHandler):
                 esteVehicle.speeds.append(attrs.get('speed'))
                 esteVehicle.lanes.append(attrs.get('lane'))
                 esteVehicle.positions.append(attrs.get('pos'))
+                esteVehicle.driving_cycle[self.time]=float(attrs.get('speed'))
                 #print('nuevo tiempo ' + attrs.get('id'))
             else:
                 parsed_vehicles[attrs.get('id')]=OutputVehicle(
