@@ -33,7 +33,9 @@ class OutputVehicleContentHandler(xml.sax.ContentHandler):
                 current_vehicle.speeds.append(attrs.get('speed'))
                 current_vehicle.lanes.append(attrs.get('lane'))
                 current_vehicle.positions.append(attrs.get('pos'))
-                current_vehicle.driving_cycle[self.time]=float(attrs.get('speed'))
+                current_vehicle.driving_cycle.append((self.time,
+                                                    attrs.get('pos'),
+                                                    attrs.get('speed')))
                 #print('nuevo tiempo ' + attrs.get('id'))
             else:
                 parsed_vehicles_ids.add(attrs.get('id'))
@@ -42,7 +44,9 @@ class OutputVehicleContentHandler(xml.sax.ContentHandler):
                                                         self.time,
                                                         attrs.get('speed'),
                                                         attrs.get('lane'),
-                                                        attrs.get('pos'))
+                                                        attrs.get('pos'),
+                                                        attrs.get('x'),
+                                                        attrs.get('y'))
                 #print('nuevo vehiculo ' + attrs.get('id'))
 
     def endElement(self, name):

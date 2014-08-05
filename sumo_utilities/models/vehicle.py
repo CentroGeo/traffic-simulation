@@ -56,18 +56,21 @@ class VehicleType():
 class OutputVehicle():
     """Vehicles in output files (vtypeprobe).
         str id: el id del vehiculo como viene en sumo
-        list (int) timesteps: los timesteps de la simulación en los que participa
-                        el vehiculo
+        list (int) timesteps: los timesteps de la simulación en los que
+                    participa el vehiculo
         list speeds: la velocidad a la que va en el correspondiente timestep
         list lanes: el carril en el que va el vehiculo en el correspondiente
                     timestep
         list positions: la posición sobre el edge en la que está el vehiculo
+        list driving_cycle: (timstep, position, speed)
+        list coordinates: (x,y)
     """
-    def __init__(self,elId,timestep,speed,lane,position):
+    def __init__(self,elId,timestep,speed,lane,position,x,y):
         """Inicializa un nuevo vehiculo con los parámetros correspondientes."""
         self.id = elId
         self.timesteps = [timestep]
         self.speeds = [speed]
-        self.driving_cycle = {timestep:float(speed)}
+        self.driving_cycle = [(timestep,float(position),float(speed))]
         self.lanes = [lane]
         self.positions = [position]
+        self.coordinates = [(float(x),float(y))]
