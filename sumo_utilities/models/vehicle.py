@@ -61,7 +61,7 @@ class OutputVehicle():
         list speeds: la velocidad a la que va en el correspondiente timestep
         list lanes: el carril en el que va el vehiculo en el correspondiente
                     timestep
-        list positions: la posición sobre el edge en la que está el vehiculo
+        list float positions: la posición sobre el edge en la que está el vehiculo
         list driving_cycle: (timstep, position, speed)
         list coordinates: (x,y)
     """
@@ -72,5 +72,5 @@ class OutputVehicle():
         self.speeds = [speed]
         self.driving_cycle = [(timestep,float(position),float(speed))]
         self.lanes = [lane]
-        self.positions = [position]
+        self.positions = [float(position)]
         self.coordinates = [(float(x),float(y))]

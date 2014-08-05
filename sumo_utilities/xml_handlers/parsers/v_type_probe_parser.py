@@ -32,7 +32,7 @@ class OutputVehicleContentHandler(xml.sax.ContentHandler):
                 current_vehicle.timesteps.append(self.time)
                 current_vehicle.speeds.append(attrs.get('speed'))
                 current_vehicle.lanes.append(attrs.get('lane'))
-                current_vehicle.positions.append(attrs.get('pos'))
+                current_vehicle.positions.append(float(attrs.get('pos')))
                 current_vehicle.driving_cycle.append((self.time,
                                                     attrs.get('pos'),
                                                     attrs.get('speed')))
