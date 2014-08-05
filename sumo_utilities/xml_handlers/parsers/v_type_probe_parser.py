@@ -34,8 +34,8 @@ class OutputVehicleContentHandler(xml.sax.ContentHandler):
                 current_vehicle.lanes.append(attrs.get('lane'))
                 current_vehicle.positions.append(float(attrs.get('pos')))
                 current_vehicle.driving_cycle.append((self.time,
-                                                    attrs.get('pos'),
-                                                    attrs.get('speed')))
+                                                    float(attrs.get('pos')),
+                                                    float(attrs.get('speed'))))
                 #print('nuevo tiempo ' + attrs.get('id'))
             else:
                 parsed_vehicles_ids.add(attrs.get('id'))
