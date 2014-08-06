@@ -6,7 +6,7 @@ from models.vehicle import OutputVehicle
 from models.flow import Flow
 from xml_handlers.writers.flows_writer import FlowsWriter
 
-with open('data/promedio_laboral.csv', 'rb') as f:
+with open('data/muestra.csv', 'rb') as f:
     reader = csv.reader(f)
     hourly_cars = []
     for row in reader:

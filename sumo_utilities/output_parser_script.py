@@ -6,36 +6,70 @@ from xml_handlers.parsers.v_type_probe_parser import write_advisor_files
 
 
 #write_advisor_files("data/prueba_salida.xml")
-time_window = 2 #number of intervals to use on average calculations
-parsed_vehicles = v_type_probe_parse("data/output/salida.xml")
-timesteps = []
-for k,v in parsed_vehicles.items():
-  timesteps.extend(v.timesteps)
 
-timesteps = sorted(list(Set(timesteps)))
-print timesteps
-
-timsteps_vehicles = {}
-timstep_speeds = []
-n_vehicles = 0
-# for t in timesteps:
-#   #timsteps_vehicles[t]=[]
-#     for k,v in parsed_vehicles.items():
-#         if t in v.timesteps:
-#             n_vehicles += 1
-#             timstep_speeds.append(v.driving_cycle[t])
+#input parameters:
+#"data/output/test_vtype_probe.xml"
 #
-#     #print timstep_speeds
-#     print str(t),sum(timstep_speeds),str(n_vehicles)
-#     #print str(t),str(sum(timstep_speeds)),str(n_vehicles)
-#     n_vehicles = 0
 
-        #timsteps_vehicles[t].append(v.speeds[i])
+xml_file = "data/output/salida.xml"
+time_intervals = 4 #number of time intervals to use on average calculations
+length_intervals = 100 #number of length intervals for samples
 
-# timsteps_vehicles = collections.OrderedDict(sorted(timsteps_vehicles.items()))
-# print timsteps_vehicles
-# for k,v in timsteps_vehicles:
-#   timestep_average =
+parsed_vehicles = v_type_probe_parse(xml_file)
+print 'Datos de la simulación'
+print 'total de vehiculos: ' + str(len(parsed_vehicles))
+timesteps = []
+positions = []
+for k,v in parsed_vehicles.items():
+    timesteps.extend(v.timesteps)
+    positions.extend(v.positions)
 
-# for k,v in timsteps_vehicles.items():
-#     print k,len(v)
+min_pos = min(positions)
+max_pos = max(positions)
+length_window = (max_pos - min_pos)/length_intervals
+timesteps = sorted(list(Set(timesteps)))
+min_time = min(timesteps)
+max_time = max(timesteps)
+time_window = (max_time - min_time)/time_intervals
+print 'intervalos muestreados: ' + str(len(timesteps))
+print 'posición mínima: ' + str(min_pos)
+print 'posición máxima: ' + str(max_pos)
+print 'longitud de muestreo: ' + str(length_window)
+print 'timsteps: ' + str(max_time)
+length_intervals_list = [min_pos + k*length_window for k in
+                    range(0,length_intervals+1)]
+
+time_intervals_list = [min_time + k*time_window for k in range(0,time_intervals+1)]
+#print 'Los intervalos de tiempo: ' + str(time_intervals_list)
+#print 'Los intervalos de longitud: ' + str(length_intervals_list)
+
+positions_sample = []
+for i in range(0, len(length_intervals_list)-1):
+    positions_sample.append([])
+    for k,v in parsed_vehicles.items():
+        for step in v.driving_cycle:
+            if (step[1] >= length_intervals_list[i] and
+                step[1] <= length_intervals_list[i+1]):
+                positions_sample[i].append(step)
+
+vehicles_per_sample = [len(l) for l in positions_sample]
+#print 'vehículos por intervalo de longitud: ' + str(vehicles_per_sample)
+samples = []
+suma = 0
+v_cnt = 0
+for i,length_sample in enumerate(positions_sample):
+    samples.append([])
+    for t in range(0,len(time_intervals_list)-1):
+        for v in length_sample:
+            if (v[0] >= time_intervals_list[t] and
+                v[0] <= time_intervals_list[t+1]):
+                suma += v[2]
+                v_cnt += 1
+
+        samples[i].append(suma/v_cnt)
+        suma = 0
+        v_cnt = 0
+
+# times_per_sample = [len(l) for l in samples]
+print 'longitud de muestras: ' + str([len(l) for l in samples])
+print 'muestras: ' + str(samples)
