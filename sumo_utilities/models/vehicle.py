@@ -65,12 +65,27 @@ class OutputVehicle():
         list driving_cycle: (timstep, position, speed)
         list coordinates: (x,y)
     """
-    def __init__(self,elId,timestep,speed,lane,position,x,y):
+    def __init__(self,id,timestep,speed,lane,position,x,y):
         """Inicializa un nuevo vehiculo con los parámetros correspondientes."""
-        self.id = elId
+        self.id = id
         self.timesteps = [timestep]
         self.speeds = [speed]
         self.driving_cycle = [(timestep,float(position),float(speed))]
         self.lanes = [lane]
         self.positions = [float(position)]
         self.coordinates = [(float(x),float(y))]
+
+    def append_timestep(self,timestep,speed,lane,position,x,y):
+        """ Appends timestep info to existing vehicle.
+
+            Fails if called on a unexisting vehicle (should fix that)
+        """
+
+        self.timesteps.append(timestep)
+        self.speeds.append(speed)
+        self.lanes.append(lane)
+        self.positions.append(float(position))
+        self.driving_cycle.append((timestep,
+                                            float(position),
+                                            float(speed)))
+        self.coordinates.append((float(x),float(y)))

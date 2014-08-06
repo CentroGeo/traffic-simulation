@@ -29,13 +29,11 @@ class OutputVehicleContentHandler(xml.sax.ContentHandler):
         elif name == 'vehicle':
             if attrs.get('id') in parsed_vehicles_ids:
                 current_vehicle = parsed_vehicles[attrs.get('id')]
-                current_vehicle.timesteps.append(self.time)
-                current_vehicle.speeds.append(attrs.get('speed'))
-                current_vehicle.lanes.append(attrs.get('lane'))
-                current_vehicle.positions.append(float(attrs.get('pos')))
-                current_vehicle.driving_cycle.append((self.time,
-                                                    float(attrs.get('pos')),
-                                                    float(attrs.get('speed'))))
+                current_vehicle.append_timestep(self.time,attrs.get('speed'),
+                                                attrs.get('lane'),
+                                                attrs.get('pos'),
+                                                attrs.get('x'),
+                                                attrs.get('y'))
                 #print('nuevo tiempo ' + attrs.get('id'))
             else:
                 parsed_vehicles_ids.add(attrs.get('id'))
@@ -56,7 +54,7 @@ def v_type_probe_parse(source_fileName):
     """Regresa el diccionario parsed_vehicles {'id':OutputVehicle}.
 
        arguments:
-       str source_fileName -- payh to read
+       str source_fileName -- path to read
     """
     source = open(source_fileName)
     xml.sax.parse(source, OutputVehicleContentHandler())
