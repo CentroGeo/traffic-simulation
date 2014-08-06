@@ -70,7 +70,7 @@ class OutputVehicle():
         self.id = id
         self.timesteps = [timestep]
         self.speeds = [speed]
-        self.driving_cycle = [(timestep,float(position),float(speed))]
+        self.driving_cycle = [(timestep,(float(x),float(y)),float(speed))]
         self.lanes = [lane]
         self.positions = [float(position)]
         self.coordinates = [(float(x),float(y))]
@@ -85,7 +85,5 @@ class OutputVehicle():
         self.speeds.append(speed)
         self.lanes.append(lane)
         self.positions.append(float(position))
-        self.driving_cycle.append((timestep,
-                                            float(position),
-                                            float(speed)))
+        self.driving_cycle.append((timestep, (float(x),float(y)), float(speed)))
         self.coordinates.append((float(x),float(y)))

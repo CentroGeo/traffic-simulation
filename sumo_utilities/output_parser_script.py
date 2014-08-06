@@ -23,8 +23,8 @@ timesteps = []
 positions = []
 for k,v in parsed_vehicles.items():
     timesteps.extend(v.timesteps)
-    positions.extend(v.positions)
-
+    positions.extend([c[0] for c in v.coordinates])#Using x coordinate for the moment
+#print positions
 #Simulation parameters
 min_pos = min(positions)
 max_pos = max(positions)
@@ -51,8 +51,8 @@ for i in range(0, len(length_intervals_list)-1):
     positions_sample.append([])
     for k,v in parsed_vehicles.items():
         for step in v.driving_cycle:
-            if (step[1] >= length_intervals_list[i] and
-                step[1] <= length_intervals_list[i+1]):
+            if (step[1][0] >= length_intervals_list[i] and
+                step[1][0] <= length_intervals_list[i+1]):
                 positions_sample[i].append(step)
 
 vehicles_per_sample = [len(l) for l in positions_sample]
@@ -71,13 +71,17 @@ for i,length_sample in enumerate(positions_sample):
                 suma += v[2]
                 v_cnt += 1
 
-        samples[i].append(suma/v_cnt)
+        if v_cnt != 0:
+            samples[i].append(suma/v_cnt)
+        else:
+            pass
+
         suma = 0
         v_cnt = 0
 
 # times_per_sample = [len(l) for l in samples]
-print 'longitud de muestras: ' + str([len(l) for l in samples])
-print 'muestras: ' + str(samples)
+# print 'longitud de muestras: ' + str([len(l) for l in samples])
+# print 'muestras: ' + str(samples)
 
 #write csv file
 with open("output/samples.csv","wb") as csvfile:
