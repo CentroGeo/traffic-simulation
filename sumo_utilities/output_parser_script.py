@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import csv
 from sets import Set
 import collections
 from xml_handlers.parsers.v_type_probe_parser import v_type_probe_parse
@@ -24,6 +25,7 @@ for k,v in parsed_vehicles.items():
     timesteps.extend(v.timesteps)
     positions.extend(v.positions)
 
+#Simulation parameters
 min_pos = min(positions)
 max_pos = max(positions)
 length_window = (max_pos - min_pos)/length_intervals
@@ -43,6 +45,7 @@ time_intervals_list = [min_time + k*time_window for k in range(0,time_intervals+
 #print 'Los intervalos de tiempo: ' + str(time_intervals_list)
 #print 'Los intervalos de longitud: ' + str(length_intervals_list)
 
+#Sample positions
 positions_sample = []
 for i in range(0, len(length_intervals_list)-1):
     positions_sample.append([])
@@ -54,6 +57,8 @@ for i in range(0, len(length_intervals_list)-1):
 
 vehicles_per_sample = [len(l) for l in positions_sample]
 #print 'vehículos por intervalo de longitud: ' + str(vehicles_per_sample)
+
+#Time samples
 samples = []
 suma = 0
 v_cnt = 0
@@ -73,3 +78,10 @@ for i,length_sample in enumerate(positions_sample):
 # times_per_sample = [len(l) for l in samples]
 print 'longitud de muestras: ' + str([len(l) for l in samples])
 print 'muestras: ' + str(samples)
+
+#write csv file
+with open("output/samples.csv","wb") as csvfile:
+    spamwriter = csv.writer(csvfile, delimiter=',', quotechar='|',
+                            quoting=csv.QUOTE_MINIMAL)
+    for row in samples:
+        spamwriter.writerow(row)
