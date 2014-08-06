@@ -25,8 +25,8 @@ class VehicleType():
             self.id = v_type + "_" + str(random.randint(1, 100))
 
         if v_type == 'car':
-            self.accel = "3.6"
-            self.deccel = "5.6"
+            self.accel = "1.0"
+            self.deccel = "0.6"
             self.sigma = "0.5"
             self.length = "7.5"
             self.maxspeed = "120"
@@ -34,8 +34,8 @@ class VehicleType():
             self.speedDev = "0.1"
             #self.guiShape = "car"
         elif v_type == 'bus':
-            self.accel = "2.6"
-            self.deccel = "4.5"
+            self.accel = "1.6"
+            self.deccel = "2.5"
             self.sigma = "0.5"
             self.length = "15"
             self.maxspeed = "70"
@@ -43,8 +43,8 @@ class VehicleType():
             self.speedDev = "0.1"
             self.guiShape = "bus"
         else:
-            self.accel = "3.6"
-            self.deccel = "5.6"
+            self.accel = "1.0"
+            self.deccel = "0.6"
             self.sigma = "0.5"
             self.length = "7.5"
             self.maxspeed = "120"
@@ -62,7 +62,7 @@ class OutputVehicle():
         list lanes: el carril en el que va el vehiculo en el correspondiente
                     timestep
         list float positions: la posición sobre el edge en la que está el vehiculo
-        list driving_cycle: (timstep, position, speed)
+        list driving_cycle: (timstep, coordinates, speed)
         list coordinates: (x,y)
     """
     def __init__(self,id,timestep,speed,lane,position,x,y):
