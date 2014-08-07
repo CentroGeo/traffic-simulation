@@ -35,13 +35,15 @@ Z_array = np.transpose(Z_array)
 
 fig_2 = plt.figure(2)
 ax_2 = fig_2.add_subplot(111, projection='3d')
-jetcmap = cm.get_cmap("winter", 3)
-jetcvals = jetcmap(np.arange(3))
-#print jetcvals[3,:]
+cmap = cm.get_cmap("Accent", x_len)
+cvals = cmap(np.arange(x_len))
+#print jetcvals
 for z in [i for i in range(0,x_len)]:
     xs = np.arange(y_len)
     ys = Z_array[z,:]
-    ax_2.bar(xs, ys, zs=z, zdir='y', color=jetcvals[z-1,:], alpha=0.8)
+    #print jetcvals[z,:],z
+    print cvals[z,:]
+    ax_2.bar(xs, ys, zs=z, zdir='y', color=cvals[z,:], alpha=0.8)
 
 # for c, z in zip(['r', 'g', 'b', 'y'], [i for i in range(0,x_len)]):
 #     xs = np.arange(y_len)
