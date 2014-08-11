@@ -49,6 +49,8 @@ class FlowsWriter():
             flow_element.set("type",flow.vehicle_type)
             flow_element.set("arrivalPos",flow.arrival_position)
             flow_element.set("departPos",flow.depart_pos)
+            flow_element.set("departLane",flow.depart_lane)
+            flow_element.set("departSpeed",flow.depart_speed)
 
         tree = ET.ElementTree(root)
         tree.write(path)
