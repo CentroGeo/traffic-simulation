@@ -16,7 +16,8 @@ class Flow():
     """
 
     def __init__(self,id,vehicle_type,interval_start,interval_end,
-                  from_edge,to,number,arrival_position,depart_pos,depart_lane):
+                  from_edge,to,number,arrival_position,depart_pos,depart_lane,
+                  depart_speed):
 
         self.id = id
         self.vehicle_type = vehicle_type
@@ -28,3 +29,4 @@ class Flow():
         self.arrival_position = arrival_position
         self.depart_pos = depart_pos
         self.depart_lane = depart_lane
+        self.depart_speed = depart_speed

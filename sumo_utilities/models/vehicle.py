@@ -25,7 +25,7 @@ class VehicleType():
             self.id = v_type + "_" + str(random.randint(1, 100))
 
         if v_type == 'car':
-            self.accel = "1.0"
+            self.accel = "0.75"
             self.deccel = "0.6"
             self.sigma = "0.5"
             self.length = "7.5"

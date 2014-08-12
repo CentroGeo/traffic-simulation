@@ -6,15 +6,16 @@ from xml_handlers.parsers.v_type_probe_parser import v_type_probe_parse
 from xml_handlers.parsers.v_type_probe_parser import write_advisor_files
 
 
-#write_advisor_files("data/prueba_salida.xml")
+
 
 #input parameters:
 #"data/output/test_vtype_probe.xml"
 #
 
 xml_file = "data/output/salida.xml"
+#write_advisor_files(xml_file)
 time_intervals = 4 #number of time intervals to use on average calculations
-length_intervals = 200 #number of length intervals for samples
+length_intervals = 400 #number of length intervals for samples
 
 parsed_vehicles = v_type_probe_parse(xml_file)
 print 'Datos de la simulación'

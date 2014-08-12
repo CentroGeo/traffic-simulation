@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on Fri Aug  8 18:41:15 2014 by SUMO netconvert Version 0.21.0
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo-sim.org/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <node-files value="adhoc.nod.xml"/>
+        <edge-files value="adhoc.edge.xml"/>
+    </input>
+
+    <output>
+        <output-file value="no_internal.net.xml"/>
+    </output>
+
+    <processing>
+        <no-internal-links value="true"/>
+    </processing>
+
+</configuration>
+-->
+
+<net version="0.13" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo-sim.org/xsd/net_file.xsd">
+
+    <location netOffset="0.00,0.00" convBoundary="0.00,0.00,1250.00,0.00" origBoundary="0.00,0.00,1250.00,0.00" projParameter="!"/>
+
+    <edge id="1fi" from="n1" to="n2" priority="2">
+        <lane id="1fi_0" index="0" speed="11.11" length="600.00" shape="0.00,-11.55 600.00,-11.55"/>
+        <lane id="1fi_1" index="1" speed="11.11" length="600.00" shape="0.00,-8.25 600.00,-8.25"/>
+        <lane id="1fi_2" index="2" speed="11.11" length="600.00" shape="0.00,-4.95 600.00,-4.95"/>
+        <lane id="1fi_3" index="3" speed="11.11" length="600.00" shape="0.00,-1.65 600.00,-1.65"/>
+    </edge>
+    <edge id="1o" from="n3" to="n4" priority="1">
+        <lane id="1o_0" index="0" speed="11.11" length="645.00" shape="605.00,-11.55 1250.00,-11.55"/>
+        <lane id="1o_1" index="1" speed="11.11" length="645.00" shape="605.00,-8.25 1250.00,-8.25"/>
+        <lane id="1o_2" index="2" speed="11.11" length="645.00" shape="605.00,-4.95 1250.00,-4.95"/>
+        <lane id="1o_3" index="3" speed="11.11" length="645.00" shape="605.00,-1.65 1250.00,-1.65"/>
+    </edge>
+    <edge id="1si" from="n2" to="n3" priority="3">
+        <lane id="1si_0" index="0" speed="2.89" length="5.00" shape="600.00,-11.55 605.00,-11.55"/>
+        <lane id="1si_1" index="1" speed="2.89" length="5.00" shape="600.00,-8.25 605.00,-8.25"/>
+        <lane id="1si_2" index="2" speed="2.89" length="5.00" shape="600.00,-4.95 605.00,-4.95"/>
+        <lane id="1si_3" index="3" speed="2.89" length="5.00" shape="600.00,-1.65 605.00,-1.65"/>
+    </edge>
+
+    <junction id="n1" type="unregulated" x="0.00" y="0.00" incLanes="" intLanes="" shape="-0.00,-0.05 -0.00,-13.15"/>
+    <junction id="n2" type="priority" x="600.00" y="0.00" incLanes="1fi_0 1fi_1 1fi_2 1fi_3" intLanes="" shape="600.00,-0.05 600.00,-13.15 600.00,-0.05">
+        <request index="0" response="0000" foes="0000"/>
+        <request index="1" response="0000" foes="0000"/>
+        <request index="2" response="0000" foes="0000"/>
+        <request index="3" response="0000" foes="0000"/>
+    </junction>
+    <junction id="n3" type="priority" x="605.00" y="0.00" incLanes="1si_0 1si_1 1si_2 1si_3" intLanes="" shape="605.00,-0.05 605.00,-13.15 605.00,-0.05">
+        <request index="0" response="0000" foes="0000"/>
+        <request index="1" response="0000" foes="0000"/>
+        <request index="2" response="0000" foes="0000"/>
+        <request index="3" response="0000" foes="0000"/>
+    </junction>
+    <junction id="n4" type="unregulated" x="1250.00" y="0.00" incLanes="1o_0 1o_1 1o_2 1o_3" intLanes="" shape="1250.00,-13.15 1250.00,-0.05"/>
+
+    <connection from="1fi" to="1si" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="1fi" to="1si" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from="1fi" to="1si" fromLane="2" toLane="2" dir="s" state="M"/>
+    <connection from="1fi" to="1si" fromLane="3" toLane="3" dir="s" state="M"/>
+    <connection from="1si" to="1o" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="1si" to="1o" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from="1si" to="1o" fromLane="2" toLane="2" dir="s" state="M"/>
+    <connection from="1si" to="1o" fromLane="3" toLane="3" dir="s" state="M"/>
+
+</net>

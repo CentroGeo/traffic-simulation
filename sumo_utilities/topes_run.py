@@ -15,12 +15,12 @@ with open('data/muestra.csv', 'rb') as f:
 flows=[]
 for i,h in enumerate(hourly_cars):
     flows.append(Flow('f_'+str(i),'car',str(i*3600),str(3600*(i+1)),'1fi','1o',
-                      str(int(round(float(h[0])))),'max','free','random'))
+                      str(int(round(float(h[0])))),'max','free','best','max'))
 
 flows_writer = FlowsWriter(flows)
 flows_writer.write_xml('output/hourly_flows.xml')
 #call to duarouter:
-call(["duarouter", "--flows=output/hourly_flows.xml","--net=data/august.net.xml",
+call(["duarouter", "--flows=output/hourly_flows.xml","--net=data/no_internal.net.xml",
     "--output-file=data/routes.rou.xml"])
 print 'done with the routes'
 #call sumo
