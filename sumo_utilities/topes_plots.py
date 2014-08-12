@@ -45,36 +45,9 @@ for z in [i for i in range(0,x_len)]:
     print cvals[z,:]
     ax_2.bar(xs, ys, zs=z, zdir='y', color=cvals[z*3,:], alpha=0.8)
 
-# for c, z in zip(['r', 'g', 'b', 'y'], [i for i in range(0,x_len)]):
-#     xs = np.arange(y_len)
-#     ys = Z_array[z,:]
-#     print c
-#     ax_2.bar(xs, ys, zs=z, zdir='y', color=jetcvals[z-1,:], alpha=0.8)
-    #print Z[z]
-
-# print xs
-# print ys
 
 ax_2.set_xlabel('Distancia')
 ax_2.set_ylabel('Tiempo')
 ax_2.set_zlabel('Velocidad')
 
 plt.show()
-# X = np.array([[0,1,2,3,4],[0,1,2,3,4]])  # lenght N
-# Y = np.array([[0,1,2,3,4],[0,1,2,3,4]])  # lenght M
-# Z = np.array([[1,1,1,1,1],[1,1,1,1,1]])  # M x N
-# #X, Y = np.meshgrid(X, Y)
-# fig = plt.figure()
-# ax = fig.add_subplot(111, projection='3d')
-# ax.plot_wireframe(X, Y, Z, rstride=10, cstride=10)
-# plt.show()
-
-
-
-# fig = plt.figure()
-# ax = fig.add_subplot(111, projection='3d')
-# X, Y, Z = axes3d.get_test_data(0.05)
-# print X
-# ax.plot_wireframe(X, Y, Z, rstride=10, cstride=10)
-#
-# plt.show()
