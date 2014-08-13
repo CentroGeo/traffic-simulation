@@ -27,7 +27,7 @@ class FlowsWriter():
             v_type_element.set("length",v_type.length)
             v_type_element.set("maxspeed",v_type.maxspeed)
             v_type_element.set("color",v_type.color)
-            if hasattr("v_type","guiShape"):
+            if hasattr(v_type,"guiShape"):
                 v_type_element.set("guiShape",v_type.guiShape)
 
             v_type_element.set("speedDev",v_type.speedDev)
