@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on Tue Aug 19 19:12:06 2014 by SUMO netconvert Version 0.21.0
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo-sim.org/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <node-files value="tope_1.nod.xml"/>
+        <edge-files value="tope_1.edg.xml"/>
+    </input>
+
+    <output>
+        <output-file value="tope_1.net.xml"/>
+    </output>
+
+</configuration>
+-->
+
+<net version="0.13" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo-sim.org/xsd/net_file.xsd">
+
+    <location netOffset="-481379.31,-2138007.69" convBoundary="0.00,0.00,646.39,39.45" origBoundary="-99.177278,19.335937,-99.171123,19.336288" projParameter="+proj=utm +zone=14 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"/>
+
+    <edge id=":-1517_0" function="internal">
+        <lane id=":-1517_0_0" index="0" speed="10.42" length="0.10" shape="193.92,33.19 193.90,33.19"/>
+        <lane id=":-1517_0_1" index="1" speed="10.42" length="0.10" shape="193.71,29.90 193.71,29.90"/>
+        <lane id=":-1517_0_2" index="2" speed="10.42" length="0.10" shape="193.51,26.60 193.51,26.60"/>
+        <lane id=":-1517_0_3" index="3" speed="10.42" length="0.10" shape="193.30,23.31 193.32,23.31"/>
+    </edge>
+    <edge id=":-1522_0" function="internal">
+        <lane id=":-1522_0_0" index="0" speed="10.42" length="0.10" shape="192.88,33.25 192.88,33.25"/>
+        <lane id=":-1522_0_1" index="1" speed="10.42" length="0.10" shape="192.69,29.96 192.69,29.96"/>
+        <lane id=":-1522_0_2" index="2" speed="10.42" length="0.10" shape="192.49,26.66 192.49,26.66"/>
+        <lane id=":-1522_0_3" index="3" speed="10.42" length="0.10" shape="192.30,23.37 192.30,23.37"/>
+    </edge>
+
+    <edge id="fin" from="-1522" to="-22" priority="7" spreadType="center">
+        <lane id="fin_0" index="0" speed="19.44" length="192.91" shape="192.88,33.25 0.29,44.39"/>
+        <lane id="fin_1" index="1" speed="19.44" length="192.91" shape="192.69,29.96 0.10,41.10"/>
+        <lane id="fin_2" index="2" speed="19.44" length="192.91" shape="192.49,26.66 -0.10,37.80"/>
+        <lane id="fin_3" index="3" speed="19.44" length="192.91" shape="192.30,23.37 -0.29,34.51"/>
+    </edge>
+    <edge id="inicio" from="-46" to="-1517" priority="7" spreadType="center">
+        <lane id="inicio_0" index="0" speed="19.44" length="453.66" shape="646.70,4.94 193.92,33.19"/>
+        <lane id="inicio_1" index="1" speed="19.44" length="453.66" shape="646.49,1.65 193.71,29.90"/>
+        <lane id="inicio_2" index="2" speed="19.44" length="453.66" shape="646.29,-1.65 193.51,26.60"/>
+        <lane id="inicio_3" index="3" speed="19.44" length="453.66" shape="646.08,-4.94 193.30,23.31"/>
+    </edge>
+    <edge id="tope" from="-1517" to="-1522" priority="7" spreadType="center">
+        <lane id="tope_0" index="0" speed="1.39" length="1.02" shape="193.90,33.19 192.88,33.25"/>
+        <lane id="tope_1" index="1" speed="1.39" length="1.02" shape="193.71,29.90 192.69,29.96"/>
+        <lane id="tope_2" index="2" speed="1.39" length="1.02" shape="193.51,26.60 192.49,26.66"/>
+        <lane id="tope_3" index="3" speed="1.39" length="1.02" shape="193.32,23.31 192.30,23.37"/>
+    </edge>
+
+    <junction id="-1517" type="priority" x="193.61" y="28.25" incLanes="inicio_0 inicio_1 inicio_2 inicio_3" intLanes=":-1517_0_0 :-1517_0_1 :-1517_0_2 :-1517_0_3" shape="194.02,34.79 193.20,21.71 193.99,34.79">
+        <request index="0" response="0000" foes="0000" cont="0"/>
+        <request index="1" response="0000" foes="0000" cont="0"/>
+        <request index="2" response="0000" foes="0000" cont="0"/>
+        <request index="3" response="0000" foes="0000" cont="0"/>
+    </junction>
+    <junction id="-1522" type="priority" x="192.59" y="28.31" incLanes="tope_0 tope_1 tope_2 tope_3" intLanes=":-1522_0_0 :-1522_0_1 :-1522_0_2 :-1522_0_3" shape="192.97,34.85 192.21,21.77 192.97,34.85">
+        <request index="0" response="0000" foes="0000" cont="0"/>
+        <request index="1" response="0000" foes="0000" cont="0"/>
+        <request index="2" response="0000" foes="0000" cont="0"/>
+        <request index="3" response="0000" foes="0000" cont="0"/>
+    </junction>
+    <junction id="-22" type="unregulated" x="0.00" y="39.45" incLanes="fin_0 fin_1 fin_2 fin_3" intLanes="" shape="0.38,45.99 -0.38,32.91"/>
+    <junction id="-46" type="unregulated" x="646.39" y="0.00" incLanes="" intLanes="" shape="645.98,-6.54 646.80,6.54"/>
+
+    <connection from="inicio" to="tope" fromLane="0" toLane="0" via=":-1517_0_0" dir="s" state="M"/>
+    <connection from="inicio" to="tope" fromLane="1" toLane="1" via=":-1517_0_1" dir="s" state="M"/>
+    <connection from="inicio" to="tope" fromLane="2" toLane="2" via=":-1517_0_2" dir="s" state="M"/>
+    <connection from="inicio" to="tope" fromLane="3" toLane="3" via=":-1517_0_3" dir="s" state="M"/>
+    <connection from="tope" to="fin" fromLane="0" toLane="0" via=":-1522_0_0" dir="s" state="M"/>
+    <connection from="tope" to="fin" fromLane="1" toLane="1" via=":-1522_0_1" dir="s" state="M"/>
+    <connection from="tope" to="fin" fromLane="2" toLane="2" via=":-1522_0_2" dir="s" state="M"/>
+    <connection from="tope" to="fin" fromLane="3" toLane="3" via=":-1522_0_3" dir="s" state="M"/>
+
+    <connection from=":-1517_0" to="tope" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":-1517_0" to="tope" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":-1517_0" to="tope" fromLane="2" toLane="2" dir="s" state="M"/>
+    <connection from=":-1517_0" to="tope" fromLane="3" toLane="3" dir="s" state="M"/>
+    <connection from=":-1522_0" to="fin" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":-1522_0" to="fin" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":-1522_0" to="fin" fromLane="2" toLane="2" dir="s" state="M"/>
+    <connection from=":-1522_0" to="fin" fromLane="3" toLane="3" dir="s" state="M"/>
+
+</net>
