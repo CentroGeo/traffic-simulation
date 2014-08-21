@@ -14,8 +14,8 @@ from xml_handlers.parsers.v_type_probe_parser import write_advisor_files
 
 xml_file = "data/output/salida.xml"
 #write_advisor_files(xml_file)
-time_intervals = 4 #number of time intervals to use on average calculations
-length_intervals = 400 #number of length intervals for samples
+time_intervals = 10 #number of time intervals to use on average calculations
+length_intervals = 200 #number of length intervals for samples
 
 parsed_vehicles = v_type_probe_parse(xml_file)
 print 'Datos de la simulación'
@@ -24,7 +24,7 @@ timesteps = []
 positions = []
 for k,v in parsed_vehicles.items():
     timesteps.extend(v.timesteps)
-    positions.extend([c[0] for c in v.coordinates])#Using x coordinate for the moment
+    positions.extend([c[2] for c in v.driving_cycle])#Using x coordinate for the moment
 #print positions
 #Simulation parameters
 min_pos = min(positions)
@@ -52,8 +52,8 @@ for i in range(0, len(length_intervals_list)-1):
     positions_sample.append([])
     for k,v in parsed_vehicles.items():
         for step in v.driving_cycle:
-            if (step[1][0] >= length_intervals_list[i] and
-                step[1][0] <= length_intervals_list[i+1]):
+            if (step[2] >= length_intervals_list[i] and
+                step[2] <= length_intervals_list[i+1]):
                 positions_sample[i].append(step)
 
 vehicles_per_sample = [len(l) for l in positions_sample]
@@ -69,7 +69,7 @@ for i,length_sample in enumerate(positions_sample):
         for v in length_sample:
             if (v[0] >= time_intervals_list[t] and
                 v[0] <= time_intervals_list[t+1]):
-                suma += v[2]
+                suma += v[3]
                 v_cnt += 1
 
         if v_cnt != 0:

@@ -25,7 +25,7 @@ class OutputVehicleContentHandler(xml.sax.ContentHandler):
     def startElement(self, name, attrs):
         if name == 'timestep':
             self.time = int(float(attrs.get('time')))
-            print 'processing timestep ' + str(self.time)
+            #print 'processing timestep ' + str(self.time)
         elif name == 'vehicle':
             if attrs.get('id') in parsed_vehicles_ids:
                 current_vehicle = parsed_vehicles[attrs.get('id')]

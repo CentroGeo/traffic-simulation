@@ -84,18 +84,26 @@ class OutputVehicle():
         list lanes: el carril en el que va el vehiculo en el correspondiente
                     timestep
         list float positions: la posición sobre el edge en la que está el vehiculo
-        list driving_cycle: (timstep, coordinates, speed)
+        list driving_cycle: (timstep, coordinates, trip_distance, speed)
+                            trip_distance is the total length of trip
+                            (up to timestep)
         list coordinates: (x,y)
+        list edges: succesion of edges in vehicle route
+        float change_position: trip distance at last edge change
     """
     def __init__(self,id,timestep,speed,lane,position,x,y):
         """Inicializa un nuevo vehiculo con los parámetros correspondientes."""
         self.id = id
         self.timesteps = [timestep]
         self.speeds = [speed]
-        self.driving_cycle = [(timestep,(float(x),float(y)),float(speed))]
+        self.driving_cycle = [(timestep,(float(x),float(y)),
+                             float(position), float(speed))]
         self.lanes = [lane]
         self.positions = [float(position)]
         self.coordinates = [(float(x),float(y))]
+        self.edges = [lane.split('_')[0]]
+        self.change_position = 0.0
+
 
     def append_timestep(self,timestep,speed,lane,position,x,y):
         """ Appends timestep info to existing vehicle.
@@ -106,6 +114,12 @@ class OutputVehicle():
         self.timesteps.append(timestep)
         self.speeds.append(speed)
         self.lanes.append(lane)
+        if lane.split('_')[0] != self.edges[-1]:
+            self.change_position = self.driving_cycle[-1][2]
+
         self.positions.append(float(position))
-        self.driving_cycle.append((timestep, (float(x),float(y)), float(speed)))
+        self.driving_cycle.append((timestep, (float(x),float(y)),
+                                 self.change_position + float(position),
+                                 float(speed)))
         self.coordinates.append((float(x),float(y)))
+        self.edges.append(lane.split('_')[0])
