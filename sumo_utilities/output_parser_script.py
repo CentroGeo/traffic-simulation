@@ -13,7 +13,7 @@ from xml_handlers.parsers.v_type_probe_parser import write_advisor_files
 #
 
 xml_file = "data/output/salida.xml"
-#write_advisor_files(xml_file)
+write_advisor_files(xml_file)
 time_intervals = 10 #number of time intervals to use on average calculations
 length_intervals = 200 #number of length intervals for samples
 

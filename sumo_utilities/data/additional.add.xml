@@ -1,5 +1,6 @@
 <additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.sf.net/xsd/additional_file.xsd">
 
-	<vTypeProbe id="test1" type="car" freq="2" file="output/salida.xml"/>
+	<vTypeProbe id="light" type="car" freq="1" file="output/salida.xml"/>
+	<vTypeProbe id="heavy" type="bus" freq="1" file="output/salida.xml"/>
 
 </additional>

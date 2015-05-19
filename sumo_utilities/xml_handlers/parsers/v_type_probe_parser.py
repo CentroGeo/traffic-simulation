@@ -64,9 +64,9 @@ def write_advisor_files(source_filename):
 
     parsed_vehicles = v_type_probe_parse(source_filename)
     for k,v in parsed_vehicles.items():
-        with open("output/v_"+k,"wb") as csvfile:
+        with open("output/v_"+k + ".csv","wb") as csvfile:
             spamwriter = csv.writer(csvfile, delimiter=',', quotechar='|',
                                     quoting=csv.QUOTE_MINIMAL)
             for j,t in enumerate(v.timesteps):
-                renglon = [v.id,t,v.speeds[j]]
+                renglon = [t,v.coordinates[j][0],v.coordinates[j][1],v.speeds[j]]
                 spamwriter.writerow(renglon)
