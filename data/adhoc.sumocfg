@@ -3,7 +3,7 @@
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.sf.net/xsd/sumoConfiguration.xsd">
 
     <input>
-        <net-file value="tope_1.net.xml"/>
+        <net-file value="topes_2015.net.xml"/>
         <route-files value="routes.rou.xml"/>
         <additional-files value="additional.add.xml"/>
     </input>

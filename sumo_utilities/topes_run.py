@@ -7,7 +7,7 @@ from models.flow import Flow
 from xml_handlers.writers.flows_writer import FlowsWriter
 
 #input parameters:
-net = 'data/tope_1.net.xml'
+net = 'data/topes_2015.net.xml'
 vehicle_counts = 'data/muestra.csv'
 output_flows = 'output/hourly_flows.xml'
 output_routes = 'data/routes.rou.xml'
@@ -27,7 +27,7 @@ for i,h in enumerate(hourly_cars):
         number = int(round(v[1]*float(h[0])))
         print number, v[0]
         flows.append(Flow('f_'+v[0] +'_'+str(i),v[0],str(i*3600),
-                            str(3600*(i+1)),'inicio','fin',
+                            str(3600*(i+1)),'25695930#0','-451',
                             str(number),'max','free','best','max'))
 
 flows_writer = FlowsWriter(flows)
