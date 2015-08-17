@@ -5,7 +5,7 @@ class Flow():
     Sumo flow.
 
     id: the id of the flow
-    str vehicle_type: Vehicle type
+    obj vehicle_type: models.VehicleType
     str interval_start: start time
     str interval_end: end time
     str from_edge: starting edge

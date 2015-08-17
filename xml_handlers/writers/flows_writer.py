@@ -21,21 +21,21 @@ class FlowsWriter():
 
         root = ET.Element("flows")
         for v in self.v_types:
-            v_type = VehicleType(v,v)
+            #v_type = VehicleType(v,v)
             v_type_element = ET.SubElement(root, "vType")
-            v_type_element.set("id",v_type.id)
-            v_type_element.set("length",v_type.length)
-            v_type_element.set("maxspeed",v_type.maxspeed)
-            v_type_element.set("color",v_type.color)
-            if hasattr(v_type,"guiShape"):
-                v_type_element.set("guiShape",v_type.guiShape)
+            v_type_element.set("id",v.id)
+            v_type_element.set("length",v.length)
+            v_type_element.set("maxspeed",v.maxspeed)
+            v_type_element.set("color",v.color)
+            if hasattr(v,"guiShape"):
+                v_type_element.set("guiShape",v.guiShape)
 
-            v_type_element.set("speedDev",v_type.speedDev)
+            v_type_element.set("speedDev",v.speedDev)
             car_following_model = ET.SubElement(v_type_element,
                                                 "carFollowing-Krauss")
-            car_following_model.set("accel",v_type.accel)
-            car_following_model.set("decel",v_type.deccel)
-            car_following_model.set("sigma",v_type.sigma)
+            car_following_model.set("accel",v.accel)
+            car_following_model.set("decel",v.deccel)
+            car_following_model.set("sigma",v.sigma)
 
         for flow in self.flows:
             interval_element = ET.SubElement(root, "interval")
@@ -46,7 +46,7 @@ class FlowsWriter():
             flow_element.set("from",flow.from_edge)
             flow_element.set("to",flow.to)
             flow_element.set("number",flow.number)
-            flow_element.set("type",flow.vehicle_type)
+            flow_element.set("type",flow.vehicle_type.v_type)
             flow_element.set("arrivalPos",flow.arrival_position)
             flow_element.set("departPos",flow.depart_pos)
             flow_element.set("departLane",flow.depart_lane)
