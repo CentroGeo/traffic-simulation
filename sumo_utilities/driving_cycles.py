@@ -50,5 +50,6 @@ def parse_output(probe_file='data/output/salida.xml',
         series[v_type] = df.mean(axis=1,name = v_type)
         
     avg_df = DataFrame(series)
+    avg_df.plot()
     avg_df.to_csv(output_file)
     #return avg_df
