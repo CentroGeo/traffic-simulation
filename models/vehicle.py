@@ -54,7 +54,7 @@ class VehicleType():
         elif v_type == 'microbus':
             self.sigma = "0.5"
             self.length = "15"
-            self.maxspeed = "70"
+            self.maxspeed = "25"
             self.color = "0,0,1"
             self.speedDev = "0.1"
             self.color = "1,0,0"

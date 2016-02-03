@@ -2,5 +2,6 @@
 
 	<vTypeProbe id="light" type="car" freq="1" file="output/salida.xml"/>
 	<vTypeProbe id="heavy" type="bus" freq="1" file="output/salida.xml"/>
+    	<vTypeProbe id="heavy_2" type="microbus" freq="1" file="output/salida.xml"/>
 
 </additional>
