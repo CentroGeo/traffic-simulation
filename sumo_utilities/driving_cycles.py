@@ -47,7 +47,7 @@ def parse_output(probe_file='data/output/salida.xml',
     series = {}
     for v_type,cycle in data.items():
         df = DataFrame(cycle)
-        series[v_type] = df.mean(axis=1,name = v_type)
+        series[v_type] = df.mean(axis=1)
 
     avg_df = DataFrame(series)
     avg_df.plot()
