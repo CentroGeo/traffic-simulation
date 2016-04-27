@@ -50,6 +50,7 @@ def parse_output(probe_file='data/output/salida.xml',
         series[v_type] = df.mean(axis=1)
 
     avg_df = DataFrame(series)
+    avg_df.index.name = 'tiempo'
     return avg_df
 
 
