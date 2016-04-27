@@ -24,7 +24,7 @@ CONFIG = 'data/adhoc.sumocfg'
 def run_simulation(count,vehicle_types):
     """Corre la simulación y escribe un csv (recorrido) por tipo de vehículo
 
-       La simulaciòn dura una hora. Los csv que se escriben representan los
+       La simulaciòn dura una hora. Los csv que se esacriben representan los
        recorridos promedio por cada tipo de vehículo durante los segundos
        45 munutos de la simulación.
 
@@ -99,7 +99,12 @@ if __name__ == "__main__":
 
     types = []
     with open(args.types_csv) as types_csv:
-        r = csv.reader(types_csv,delimiter=",")
+        r = csv.reader(types_csv,delimiter=",",dialect=csv.excel_tab)
+        # try:
+        #     r = csv.reader(types_csv,delimiter=",")
+        # except csv.Error:
+        #     r = csv.reader(types_csv,delimiter=",",dialect=csv.excel_tab)
+
         for row in r:
             row = [conv(d) for d in row]
             types.append(tuple(row))
@@ -107,5 +112,6 @@ if __name__ == "__main__":
     #Llamamos a la simulación:
     run_simulation(args.counts,types)
 
-    parse_output()
+    avg_df = parse_output()
+    avg_df.to_csv('data/output/samples.csv')
     write_advisor_files()
