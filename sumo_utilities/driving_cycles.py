@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import csv
-from sets import Set
 from pandas import DataFrame
 from xml_handlers.parsers.v_type_probe_parser import v_type_probe_parse
 
@@ -27,7 +26,7 @@ def parse_output(probe_file='data/output/salida.xml',
         types.append(t)
         data = {}
 
-    types = Set(types)
+    types = set(types)
     data = {}
     for t in types:
         data[t] = {}
@@ -60,7 +59,7 @@ def write_advisor_files(probe_file='data/output/salida.xml',
     parsed_vehicles = v_type_probe_parse(probe_file)
     for k, v in parsed_vehicles.items():
         v_name = k.replace('.', '_')[2:]
-        with open(output_path + "sumo_" + v_name + ".csv", "wb") as csvfile:
+        with open(output_path + "sumo_" + v_name + ".csv", "w") as csvfile:
             spamwriter = csv.writer(csvfile, delimiter=',', quotechar='|',
                                     quoting=csv.QUOTE_MINIMAL)
             spamwriter.writerow(['t_global', 't_vehiculo', 'velocidad',
