@@ -30,8 +30,6 @@ def average_output(probe_file='data/output/salida.xml',
     positions = []
     for k, v in parsed_vehicles.items():
         timesteps.extend(v.timesteps)
-        # Using x coordinate for the moment
-
         positions.extend([c[2] for c in v.driving_cycle])
     min_pos = min(positions)
     max_pos = max(positions)
