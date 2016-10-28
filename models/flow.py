@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 class Flow():
     """
     Sumo flow.
@@ -15,9 +16,9 @@ class Flow():
     str depart_pos: departing position ("random","free","random_free","base")
     """
 
-    def __init__(self,id,vehicle_type,interval_start,interval_end,
-                  from_edge,to,number,arrival_position,depart_pos,depart_lane,
-                  depart_speed):
+    def __init__(self, id, vehicle_type, interval_start, interval_end,
+                 from_edge, to, number, arrival_position, depart_pos,
+                 depart_lane, depart_speed):
 
         self.id = id
         self.vehicle_type = vehicle_type
