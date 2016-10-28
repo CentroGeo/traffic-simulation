@@ -1,1 +1,14 @@
-<flows><vType color="0,1,0" id="car" length="5" maxspeed="120" speedDev="0.1"><carFollowing-Krauss accel="0.5" decel="1.8" sigma="0.5" /></vType><vType color="1,0,0" guiShape="bus" id="microbus" length="15" maxspeed="25" speedDev="0.1"><carFollowing-Krauss accel="0.2" decel="0.6" sigma="0.5" /></vType><vType color="0,0,1" guiShape="bus" id="bus" length="20" maxspeed="70" speedDev="0.1"><carFollowing-Krauss accel="0.3" decel="1.2" sigma="0.5" /></vType><interval begin="0" end="3600"><flow arrivalPos="max" departLane="best" departPos="free" departSpeed="max" from="25695930#0" id="f_car" number="35" to="-451" type="car" /></interval><interval begin="0" end="3600"><flow arrivalPos="max" departLane="best" departPos="free" departSpeed="max" from="25695930#0" id="f_bus" number="8" to="-451" type="bus" /></interval><interval begin="0" end="3600"><flow arrivalPos="max" departLane="best" departPos="free" departSpeed="max" from="25695930#0" id="f_microbus" number="8" to="-451" type="microbus" /></interval></flows>
+<flows>
+  <vType color="0,1,0" id="car" length="5" maxspeed="120" speedDev="0.1"><carFollowing-Krauss accel="0.5" decel="1.8" sigma="0.5" /></vType>
+  <vType color="1,0,0" guiShape="bus" id="microbus" length="15" maxspeed="25" speedDev="0.1"><carFollowing-Krauss accel="0.2" decel="0.6" sigma="0.5" /></vType>
+  <vType color="0,0,1" guiShape="bus" id="bus" length="20" maxspeed="70" speedDev="0.1"><carFollowing-Krauss accel="0.3" decel="1.2" sigma="0.5" /></vType>
+  <interval begin="0" end="3600">
+    <flow arrivalPos="max" departLane="best" departPos="free" departSpeed="max" from="25695930#0" id="f_car" number="70" to="-451" type="car" />
+  </interval>
+  <interval begin="0" end="3600">
+    <flow arrivalPos="max" departLane="best" departPos="free" departSpeed="max" from="25695930#0" id="f_bus" number="15" to="-451" type="bus" />
+  </interval>
+  <interval begin="0" end="3600">
+    <flow arrivalPos="max" departLane="best" departPos="free" departSpeed="max" from="25695930#0" id="f_microbus" number="15" to="-451" type="microbus" />
+  </interval>
+</flows>
