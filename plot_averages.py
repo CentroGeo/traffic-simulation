@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-import csv
-from sets import Set
 from mpl_toolkits.mplot3d import axes3d
+import csv
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import numpy as np
 from xml_handlers.parsers.v_type_probe_parser import v_type_probe_parse
-from xml_handlers.parsers.v_type_probe_parser import write_advisor_files
 
 
 def average_output(probe_file='data/output/salida.xml',
@@ -38,7 +36,7 @@ def average_output(probe_file='data/output/salida.xml',
     min_pos = min(positions)
     max_pos = max(positions)
     length_window = (max_pos - min_pos)/length_intervals
-    timesteps = sorted(list(Set(timesteps)))
+    timesteps = sorted(list(set(timesteps)))
     min_time = min(timesteps)
     max_time = max(timesteps)
     time_window = (max_time - min_time)/time_intervals
