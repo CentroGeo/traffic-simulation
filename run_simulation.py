@@ -11,7 +11,7 @@ from models.flow import Flow
 from xml_handlers.writers.flows_writer import FlowsWriter
 from sumo_utilities.driving_cycles import parse_output, write_advisor_files
 # Constants
-NET = 'data/topes_2015.net.xml'
+NET = 'data/sumo_topes_2016.net.xml'
 OUT_FLOWS = 'data/hourly_flows.xml'
 OUT_ROUTS = 'data/routes.rou.xml'
 CONFIG = 'data/adhoc.sumocfg'
@@ -37,7 +37,7 @@ def run_simulation(count, vehicle_types):
         v_type = VehicleType(*v[0:3])
         number = int(round(v[3] * float(count)))  # cuantos de cada tipo
         flows.append(Flow('f_' + v[0], v_type, "0",
-                          "3600", '25695930#0', '-451',
+                          "3600", '-32995#0', '-32995#2.389.456',
                           str(number), 'max', 'free', 'best', 'max'))
     flows_writer = FlowsWriter(flows)
     flows_writer.write_xml(OUT_FLOWS)
