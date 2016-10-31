@@ -10,8 +10,25 @@ OUT_ROUTS = 'data/routes.rou.xml'
 CONFIG = 'data/adhoc.sumocfg'
 
 
-def build_routes(count, interval, vehicle_types):
+def build_routes(count, interval, vehicle_types, duplicate=False):
+    """Escribe el arcivo de flujos y el de rutas.
+       param: count int: total de vehículos en la simulación
+       param: interval int: Duración de la simulación
+       param: vehicle_types list((tipo:str,accel:float,
+                                  deccel:float,prop:float)):
+               descripción de los tipos de vehículos
+               por ejemplo:
+               vehicle_type_proportions = [('car',0.65,0.4,0.85),
+                                           ('suv',0.55,0.4,0.05),
+                                           ('bus',0.45,0.3,0.05),
+                                           ('microbus',0.45,0.3,0.05)]
+       param: duplicate bool: Si es True entonces se duplica el intervalo y
+                              la cuenta de vehículos
+    """
     flows = []
+    if duplicate:
+        interval = 2*interval
+        count = 2*count
     for v in vehicle_types:
         v_type = VehicleType(*v[0:3])
         number = int(round(v[3] * float(count)))  # cuantos de cada tipo
@@ -33,19 +50,13 @@ def build_routes(count, interval, vehicle_types):
 
 
 def run_simulation():
-    """Corre la simulación y escribe un csv (recorrido) por tipo de vehículo
-       La simulaciòn dura una hora. Los csv que se esacriben representan los
-       recorridos promedio por cada tipo de vehículo durante los segundos
-       45 munutos de la simulación.
-       param: count int: total de vehículos en la simulación
-       param: vehicle_types list((tipo:str,accel:float,
-    deccel:float,prop:float)):
-               descripción de los tipos de vehículos
-               por ejemplo:
-               vehicle_type_proportions = [('car',0.65,0.4,0.85),
-                                           ('suv',0.55,0.4,0.05),
-                                           ('bus',0.45,0.3,0.05),
-                                           ('microbus',0.45,0.3,0.05)]
+    """Corre la simulación utilizando la configuración de data/adhoc.sumocfg.
+
+       Los flujos siempre van a ser data/hourly_flows.xml y las rutas
+       data/routes.rou.xml.
+
+       Escribe el archivo data/output/salida.xml con los resultados de
+       los v_type_probes
     """
     try:
         subprocess.check_call(["sumo", "--configuration-file=" + CONFIG])
