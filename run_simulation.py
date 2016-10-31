@@ -4,9 +4,8 @@ Created on Tue May 19 11:24:35 2015
 @author: plablo
 """
 import argparse
-import csv
 from sumo_utilities.driving_cycles import parse_output, write_advisor_files
-from sumo_utilities.simulation import run_simulation
+from sumo_utilities.simulation import run_simulation, parse_types
 # Constants
 NET = 'data/sumo_topes_2016.net.xml'
 OUT_FLOWS = 'data/hourly_flows.xml'
@@ -40,25 +39,8 @@ if __name__ == "__main__":
                         default='data/output/samples.csv', type=str)
     # TODO: checar argumentos: que existan los paths
     args = parser.parse_args()
-# para convertir a float:
-
-    def conv(s):
-        try:
-            s = float(s)
-        except ValueError:
-            pass
-        return s
-
-    types = []
-    with open(args.types_csv) as types_csv:
-        r = csv.reader(types_csv, delimiter=",", dialect=csv.excel_tab)
-        # try:
-        #     r = csv.reader(types_csv,delimiter=",")
-        # except csv.Error:
-        #     r = csv.reader(types_csv,delimiter=",",dialect=csv.excel_tab)
-        for row in r:
-            row = [conv(d) for d in row]
-            types.append(tuple(row))
+    # Parseamos el archivo con los tipos.
+    types = parse_types(args.types_csv)
     # Llamamos a la simulación:
     run_simulation(args.counts, args.interval, types)
     avg_df = parse_output()

@@ -1,4 +1,5 @@
 import subprocess
+import csv
 from models.vehicle import VehicleType
 from models.flow import Flow
 from xml_handlers.writers.flows_writer import FlowsWriter
@@ -50,3 +51,20 @@ def run_simulation(count, interval, vehicle_types):
     except OSError:
         pass  # executable not found
     print('simulation done')
+
+
+def parse_types(types_file):
+    def conv(s):
+        try:
+            s = float(s)
+        except ValueError:
+            pass
+        return s
+
+    types = []
+    with open(types_file) as types_csv:
+        r = csv.reader(types_csv, delimiter=",", dialect=csv.excel_tab)
+        for row in r:
+            row = [conv(d) for d in row]
+            types.append(tuple(row))
+    return types
