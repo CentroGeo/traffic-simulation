@@ -90,6 +90,8 @@ def build_plots(samples):
                        [i for i in range(0, y_len)])
     Z = []
     for i, row in enumerate(data):
+        if len(row) != x_len:
+            row = row + [0]*(x_len - len(row))
         Z.append([])
         for e in row:
             try:
