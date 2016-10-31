@@ -4,8 +4,7 @@ from pandas import DataFrame
 from xml_handlers.parsers.v_type_probe_parser import v_type_probe_parse
 
 
-def parse_output(probe_file='data/output/salida.xml',
-                 output_file='data/output/samples.csv'):
+def parse_output(probe_file='data/output/salida.xml'):
     """Lee el vtype_probe resultado de una simulación y escribe un csv por
        cada tipo de vehículo con los ciclos de manejo promedio. La resolución
        espacial del ciclo está determinada por el parámetro delta (metros).
