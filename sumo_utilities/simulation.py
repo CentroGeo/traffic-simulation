@@ -10,21 +10,7 @@ OUT_ROUTS = 'data/routes.rou.xml'
 CONFIG = 'data/adhoc.sumocfg'
 
 
-def run_simulation(count, interval, vehicle_types):
-    """Corre la simulación y escribe un csv (recorrido) por tipo de vehículo
-       La simulaciòn dura una hora. Los csv que se esacriben representan los
-       recorridos promedio por cada tipo de vehículo durante los segundos
-       45 munutos de la simulación.
-       param: count int: total de vehículos en la simulación
-       param: vehicle_types list((tipo:str,accel:float,
-    deccel:float,prop:float)):
-               descripción de los tipos de vehículos
-               por ejemplo:
-               vehicle_type_proportions = [('car',0.65,0.4,0.85),
-                                           ('suv',0.55,0.4,0.05),
-                                           ('bus',0.45,0.3,0.05),
-                                           ('microbus',0.45,0.3,0.05)]
-    """
+def build_routes(count, interval, vehicle_types):
     flows = []
     for v in vehicle_types:
         v_type = VehicleType(*v[0:3])
@@ -44,6 +30,23 @@ def run_simulation(count, interval, vehicle_types):
     except OSError:
         pass  # executable not found
     print('routing done')
+
+
+def run_simulation():
+    """Corre la simulación y escribe un csv (recorrido) por tipo de vehículo
+       La simulaciòn dura una hora. Los csv que se esacriben representan los
+       recorridos promedio por cada tipo de vehículo durante los segundos
+       45 munutos de la simulación.
+       param: count int: total de vehículos en la simulación
+       param: vehicle_types list((tipo:str,accel:float,
+    deccel:float,prop:float)):
+               descripción de los tipos de vehículos
+               por ejemplo:
+               vehicle_type_proportions = [('car',0.65,0.4,0.85),
+                                           ('suv',0.55,0.4,0.05),
+                                           ('bus',0.45,0.3,0.05),
+                                           ('microbus',0.45,0.3,0.05)]
+    """
     try:
         subprocess.check_call(["sumo", "--configuration-file=" + CONFIG])
     except subprocess.CalledProcessError:

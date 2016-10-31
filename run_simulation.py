@@ -5,7 +5,7 @@ Created on Tue May 19 11:24:35 2015
 """
 import argparse
 from sumo_utilities.driving_cycles import parse_output, write_advisor_files
-from sumo_utilities.simulation import run_simulation, parse_types
+from sumo_utilities.simulation import build_routes, run_simulation, parse_types
 # Constants
 NET = 'data/sumo_topes_2016.net.xml'
 OUT_FLOWS = 'data/hourly_flows.xml'
@@ -42,7 +42,8 @@ if __name__ == "__main__":
     # Parseamos el archivo con los tipos.
     types = parse_types(args.types_csv)
     # Llamamos a la simulación:
-    run_simulation(args.counts, args.interval, types)
+    build_routes(args.counts, args.interval, types)
+    run_simulation()
     avg_df = parse_output()
     avg_df.to_csv('data/output/samples.csv')
     write_advisor_files()
