@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
+import matplotlib.pyplot as plt
+import matplotlib
+from pandas import DataFrame
 from sumo_utilities.simulation import build_routes, run_simulation, parse_types
 from sumo_utilities.driving_cycles import parse_output
 
+matplotlib.style.use('ggplot')
 # Constants
 NET = 'data/sumo_topes_2016.net.xml'
 OUT_FLOWS = 'data/hourly_flows.xml'
@@ -11,9 +15,16 @@ TYPES = 'data/new_types.csv'
 
 types = parse_types('data/new_types.csv')
 resultados = []
-for cuantos in range(10, 30, 10):
+car_counts = list(range(10, 200, 10))
+for cuantos in car_counts:
+    print(cuantos)
     build_routes(cuantos, 60, types, duplicate=True)
     run_simulation()
     avg_df = parse_output(start=30)
-    avg_car = avg_df['car']
+    avg_car = avg_df['car'].rename('car_' + str(cuantos))
     resultados.append(avg_car)
+
+car_df = DataFrame(resultados).transpose()
+fig, ax = plt.subplots()
+car_df.plot(ax=ax)
+plt.show()
