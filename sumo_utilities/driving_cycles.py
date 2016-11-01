@@ -4,7 +4,7 @@ from pandas import DataFrame
 from xml_handlers.parsers.v_type_probe_parser import v_type_probe_parse
 
 
-def parse_output(probe_file='data/output/salida.xml', start=0):
+def time_average(probe_file='data/output/salida.xml', start=0):
     """Lee el vtype_probe resultado de una simulación y regresa un dataframe
        con los ciclos de manejo promedio por cada tipo de vehículo.
 
@@ -49,6 +49,30 @@ def parse_output(probe_file='data/output/salida.xml', start=0):
     avg_df = DataFrame(series)
     avg_df.index.name = 'tiempo'
     return avg_df
+
+
+def space_average(probe_file='data/output/salida.xml', length_intervals=200):
+    """Lee el vtype_probe resultado de una simulación y escribe un csv con
+       las velocidades promedio para cada intervalo (espacio-temporal)
+       muestreado.
+
+       param: probe_file str: path al xml de salida de un vtype_probe
+       param: length_intervals int: número de intervalos de longitud a
+       usar
+
+    """
+
+    parsed_vehicles = v_type_probe_parse(probe_file)
+    print('Datos de la simulación')
+    print('total de vehiculos: ' + str(len(parsed_vehicles)))
+    # Encontramos los tipos de vehículos:
+    types = []
+    for c in parsed_vehicles.keys():
+        t = c.split(".")[0]
+        t = t.split("_")[1]
+        types.append(t)
+
+    types = set(types)
 
 
 def write_advisor_files(probe_file='data/output/salida.xml',
