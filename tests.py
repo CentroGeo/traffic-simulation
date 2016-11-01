@@ -10,7 +10,7 @@ CONFIG = 'data/adhoc.sumocfg'
 TYPES = 'data/new_types.csv'
 
 types = parse_types('data/new_types.csv')
-build_routes(10, 60, types, duplicate=True)
+build_routes(100, 60, types, duplicate=True)
 run_simulation()
-avg_df = parse_output()
+avg_df = parse_output(start=30)
 avg_df.to_csv('data/output/samples.csv')

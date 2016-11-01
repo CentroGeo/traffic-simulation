@@ -4,16 +4,15 @@ from pandas import DataFrame
 from xml_handlers.parsers.v_type_probe_parser import v_type_probe_parse
 
 
-def parse_output(probe_file='data/output/salida.xml'):
-    """Lee el vtype_probe resultado de una simulación y escribe un csv por
-       cada tipo de vehículo con los ciclos de manejo promedio. La resolución
-       espacial del ciclo está determinada por el parámetro delta (metros).
+def parse_output(probe_file='data/output/salida.xml', start=0):
+    """Lee el vtype_probe resultado de una simulación y regresa un dataframe
+       con los ciclos de manejo promedio por cada tipo de vehículo.
 
        param: probe_file str: path al xml de salida de un vtype_probe
-       param: output_path str: path en donde se guardan los csvs
+       param: start int: en qué segundo empezamos a muestrear
     """
 
-    parsed_vehicles = v_type_probe_parse(probe_file)
+    parsed_vehicles = v_type_probe_parse(probe_file, start)
     print('Datos de la simulación')
     print('total de vehiculos: ' + str(len(parsed_vehicles)))
 
