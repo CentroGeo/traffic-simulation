@@ -11,7 +11,11 @@ parsed_vehicles_ids = set()
 class OutputVehicleContentHandler(xml.sax.ContentHandler):
     """Parsea el xml de salida de SUMO (para vtypeProbe) y construye un
         diccionario con los vehículos (instancias de la clase OutputVehicle)
-        leídos:
+        leídos.
+        params
+        start: en qué momento empezamos a muestrear.
+
+        regresa:
         parsed_vehicles {'id':OutputVehicle}
     """
     def __init__(self, start):
@@ -53,6 +57,7 @@ def v_type_probe_parse(source_fileName, start=0):
 
        arguments:
        str source_fileName -- path to read
+       int start -- en qué momento empezamos a muestrear
     """
     source = open(source_fileName)
     xml.sax.parse(source, OutputVehicleContentHandler(start))
