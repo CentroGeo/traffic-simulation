@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+import math
 import csv
 from pandas import DataFrame
+import pandas as pd
 from xml_handlers.parsers.v_type_probe_parser import v_type_probe_parse
 
 
@@ -73,6 +75,45 @@ def space_average(probe_file='data/output/salida.xml', length_intervals=200):
         types.append(t)
 
     types = set(types)
+    data = {}
+    positions = []
+    for t in types:
+        data[t] = {}
+        for k, v in parsed_vehicles.items():
+            positions.extend([c[2] for c in v.driving_cycle])
+            if t in v.id:
+                data[t][v.id] = [(s[2], s[3]) for s in v.driving_cycle]
+
+    delta = max(positions)/length_intervals
+
+    def div_floor(r):
+        return math.floor(r/delta)
+
+    resamples = {}
+    for v_type, cycle in data.items():
+        resamples[v_type] = []
+        for v in cycle:
+            df = DataFrame(cycle[v], columns=['pos', 'speed'])
+            df['intervalo'] = df['pos'].apply(div_floor)
+            resample = df.groupby('intervalo').mean()
+            resamples[v_type].append(resample)
+
+    medias = {}
+    for v_type, resample_list in resamples.items():
+        current = resample_list[0]
+        for d in resample_list[1:]:
+            current = current.merge(d, left_index=True,
+                                    right_index=True, how='inner')
+
+        all_cols = list(current.columns)
+        pos_cols = [col for col in all_cols if 'pos' in col]
+        speed_cols = [col for col in all_cols if 'speed' in col]
+        pos_avg = current[pos_cols].mean(axis=1).rename('pos')
+        speed_avg = current[speed_cols].mean(axis=1).rename('speed')
+        merged = pd.concat([pos_avg, speed_avg], axis=1)
+        medias[v_type] = merged
+
+    return medias
 
 
 def write_advisor_files(probe_file='data/output/salida.xml',
