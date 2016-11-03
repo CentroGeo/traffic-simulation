@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 from pandas import DataFrame
 from sumo_utilities.simulation import build_routes, run_simulation, parse_types
-from sumo_utilities.driving_cycles import time_average
+from sumo_utilities.driving_cycles import time_average, space_average
 
 matplotlib.style.use('ggplot')
 # Constants
@@ -14,17 +14,23 @@ CONFIG = 'data/adhoc.sumocfg'
 TYPES = 'data/new_types.csv'
 
 types = parse_types('data/new_types.csv')
-resultados = []
-car_counts = list(range(10, 200, 10))
+resultados_time = []
+resultados_space = []
+car_counts = list(range(10, 100, 10))
 for cuantos in car_counts:
-    print(cuantos)
     build_routes(cuantos, 60, types, duplicate=True)
     run_simulation()
-    avg_df = time_average(start=30)
-    avg_car = avg_df['car'].rename('car_' + str(cuantos))
-    resultados.append(avg_car)
+    time_avg = time_average(start=30)
+    space_avg = space_average()
+    time_avg = time_avg['car'].rename('car_' + str(cuantos))
+    space_avg = space_avg['car']['speed'].rename('car_' + str(cuantos))
+    resultados_time.append(time_avg)
+    resultados_space.append(space_avg)
 
-car_df = DataFrame(resultados).transpose()
-fig, ax = plt.subplots()
-car_df.plot(ax=ax)
+car_time = DataFrame(resultados_time).transpose()
+car_space = DataFrame(resultados_space).transpose()
+
+fig, axes = plt.subplots(nrows=1, ncols=2)
+car_time.plot(ax=axes[0])
+car_space.plot(ax=axes[1])
 plt.show()
