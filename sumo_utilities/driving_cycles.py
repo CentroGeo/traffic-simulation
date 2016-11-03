@@ -80,9 +80,10 @@ def space_average(probe_file='data/output/salida.xml', length_intervals=200):
     for t in types:
         data[t] = {}
         for k, v in parsed_vehicles.items():
-            positions.extend([c[2] for c in v.driving_cycle])
+            positions.extend([c for c in v.positions])
             if t in v.id:
-                data[t][v.id] = [(s[2], s[3]) for s in v.driving_cycle]
+                data[t][v.id] = [(s[0], float(s[1])) for s in
+                                 list(zip(v.positions, v.speeds))]
 
     delta = max(positions)/length_intervals
 

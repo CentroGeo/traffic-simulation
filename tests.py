@@ -4,6 +4,7 @@ import matplotlib
 from pandas import DataFrame
 from sumo_utilities.simulation import build_routes, run_simulation, parse_types
 from sumo_utilities.driving_cycles import time_average, space_average
+from sumo_utilities.driving_cycles import write_advisor_files
 
 matplotlib.style.use('ggplot')
 # Constants
@@ -27,6 +28,8 @@ for cuantos in car_counts:
     resultados_time.append(time_avg)
     resultados_space.append(space_avg)
 
+# Escribo sólo los últimos, para probar:
+write_advisor_files()
 car_time = DataFrame(resultados_time).transpose()
 car_space = DataFrame(resultados_space).transpose()
 
