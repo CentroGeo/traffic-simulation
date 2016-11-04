@@ -1,3 +1,4 @@
+import os
 import subprocess
 import csv
 from models.vehicle import VehicleType
@@ -37,6 +38,12 @@ def build_routes(count, interval, vehicle_types, duplicate=False):
                           str(number), 'max', 'base', 'best', 'max'))
     flows_writer = FlowsWriter(flows)
     flows_writer.write_xml(OUT_FLOWS)
+    # borrar las rutas anteriores antes de escribir las nuevas:
+    try:
+        os.remove(OUT_ROUTS)
+    except:
+        pass
+
     # call to duarouter:
     try:
         subprocess.check_call(["duarouter", "--flows=" + OUT_FLOWS,
@@ -58,6 +65,13 @@ def run_simulation():
        Escribe el archivo data/output/salida.xml con los resultados de
        los v_type_probes
     """
+
+    # Elimino el archivo de salida:
+    try:
+        os.remove('data/output/salida.xml')
+    except:
+        pass
+
     try:
         subprocess.check_call(["sumo", "--configuration-file=" + CONFIG])
     except subprocess.CalledProcessError:

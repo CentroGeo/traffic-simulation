@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 import xml.etree.cElementTree as ET
 
 
@@ -15,6 +16,12 @@ class FlowsWriter():
 
     def write_xml(self, path):
         """Builds and writes the xml to the file especified in path."""
+
+        # Eliminamos el archivo si ya existe.
+        try:
+            os.remove(path)
+        except:
+            pass
 
         root = ET.Element("flows")
         for v in self.v_types:
