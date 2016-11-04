@@ -17,7 +17,7 @@ TYPES = 'data/new_types.csv'
 types = parse_types('data/new_types.csv')
 resultados_time = []
 resultados_space = []
-car_counts = list(range(10, 100, 10))
+car_counts = list(range(10, 30, 10))
 for cuantos in car_counts:
     build_routes(cuantos, 60, types, duplicate=True)
     run_simulation()

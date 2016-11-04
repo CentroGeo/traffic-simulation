@@ -35,7 +35,7 @@ def build_routes(count, interval, vehicle_types, duplicate=False):
         number = int(round(v[3] * float(count)))  # cuantos de cada tipo
         flows.append(Flow('f_' + v[0], v_type, "0",
                           str(interval), '-32995#0', '-32995#2.389.456',
-                          str(number), 'max', 'base', 'best', 'max'))
+                          str(number), 'max', 'base', 'best', 'random'))
     flows_writer = FlowsWriter(flows)
     flows_writer.write_xml(OUT_FLOWS)
     # borrar las rutas anteriores antes de escribir las nuevas:

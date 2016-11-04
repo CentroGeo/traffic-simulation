@@ -85,17 +85,23 @@ def space_average(probe_file='data/output/salida.xml', length_intervals=200):
                 data[t][v.id] = data[t][v.id] = [(s[2], s[3]) for s
                                                  in v.driving_cycle]
 
-    delta = max(positions)/length_intervals
+    min_pos = min(positions)
+    max_pos = max(positions)
+    length_window = (max_pos - min_pos)/length_intervals
+    length_intervals_list = [min_pos + k*length_window for k in
+                             range(0, length_intervals+1)]
 
-    def div_floor(r):
-        return math.floor(r/delta)
+    def get_interval(d):
+        for i, dist in enumerate(length_intervals_list):
+            if d < dist:
+                return i - 1
 
     resamples = {}
     for v_type, cycle in data.items():
         resamples[v_type] = []
         for v in cycle:
             df = DataFrame(cycle[v], columns=['pos', 'speed'])
-            df['intervalo'] = df['pos'].apply(div_floor)
+            df['intervalo'] = df['pos'].apply(get_interval)
             resample = df.groupby('intervalo').mean()
             resamples[v_type].append(resample)
 
