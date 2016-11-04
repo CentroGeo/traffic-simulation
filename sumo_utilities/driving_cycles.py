@@ -131,5 +131,5 @@ def write_advisor_files(probe_file='data/output/salida.xml',
             for j, t in enumerate(v.timesteps):
                 renglon = [t, j, v.speeds[j], v.lanes[j].split('_').pop(),
                            v.coordinates[j][0], v.coordinates[j][1],
-                           v.positions[j]]
+                           v.driving_cycle[j][2]]
                 spamwriter.writerow(renglon)
