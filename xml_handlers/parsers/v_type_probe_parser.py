@@ -62,16 +62,3 @@ def v_type_probe_parse(source_fileName, start=0):
     source = open(source_fileName)
     xml.sax.parse(source, OutputVehicleContentHandler(start))
     return parsed_vehicles
-
-
-def write_advisor_files(source_filename):
-
-    parsed_vehicles = v_type_probe_parse(source_filename)
-    for k, v in parsed_vehicles.items():
-        with open("output/v_" + k + ".csv", "wb") as csvfile:
-            spamwriter = csv.writer(csvfile, delimiter=',', quotechar='|',
-                                    quoting=csv.QUOTE_MINIMAL)
-            for j, t in enumerate(v.timesteps):
-                renglon = [t, v.coordinates[j][0], v.coordinates[j][1],
-                           v.speeds[j]]
-                spamwriter.writerow(renglon)
