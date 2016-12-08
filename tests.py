@@ -16,24 +16,24 @@ TYPES = 'data/new_types.csv'
 
 types = parse_types('data/new_types.csv')
 resultados_time = []
-resultados_space = []
-car_counts = list(range(10, 30, 10))
+#resultados_space = []
+car_counts = list(range(10, 50, 10))
 for cuantos in car_counts:
     build_routes(cuantos, 60, types, duplicate=True)
     run_simulation()
     time_avg = time_average(start=30)
-    space_avg = space_average()
+    # space_avg = space_average()
     time_avg = time_avg['car'].rename('car_' + str(cuantos))
-    space_avg = space_avg['car']['speed'].rename('car_' + str(cuantos))
+    # space_avg = space_avg['car']['speed'].rename('car_' + str(cuantos))
     resultados_time.append(time_avg)
-    resultados_space.append(space_avg)
+    # resultados_space.append(space_avg)
 
 # Escribo sólo los últimos, para probar:
 write_advisor_files()
 car_time = DataFrame(resultados_time).transpose()
-car_space = DataFrame(resultados_space).transpose()
+# car_space = DataFrame(resultados_space).transpose()
 
-fig, axes = plt.subplots(nrows=1, ncols=2)
-car_time.plot(ax=axes[0])
-car_space.plot(ax=axes[1])
+# fig, axes = plt.subplots(nrows=1, ncols=2)
+car_time.plot()
+# car_space.plot(ax=axes[1])
 plt.show()
