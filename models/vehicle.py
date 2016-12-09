@@ -113,7 +113,7 @@ class OutputVehicle():
             if lane.split('_')[0] != self.edges[-1]:
                 self.change_position = self.driving_cycle[-1][2]
 
-            self.positions.append(float(position))
+            self.positions.append(self.change_position + float(position))
             self.driving_cycle.append((timestep, (float(x), float(y)),
                                       self.change_position + float(position),
                                       float(speed)))
