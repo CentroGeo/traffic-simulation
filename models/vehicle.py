@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from pandas import DataFrame
 
 class VehicleType():
     """Represents a SUMO vehicle type
@@ -117,3 +117,13 @@ class OutputVehicle():
                                       float(speed)))
             self.coordinates.append((float(x), float(y)))
             self.edges.append(lane.split('_')[0])
+
+    def as_DataFrame(self):
+        """Regresa un DataFrame con las variables para cada timestep."""
+
+        d = {'global_timestep': self.timesteps, 'speed': self.speeds,
+             'position': self.positions,
+             'x': [c[0] for c in self.coordinates],
+             'y': [c[1] for c in self.coordinates]}
+        df = DataFrame(d)
+        return df
