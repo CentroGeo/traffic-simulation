@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from pandas import DataFrame
+import pandas as pd
+
 
 class VehicleType():
     """Represents a SUMO vehicle type
@@ -126,4 +128,7 @@ class OutputVehicle():
              'x': [c[0] for c in self.coordinates],
              'y': [c[1] for c in self.coordinates]}
         df = DataFrame(d)
+        df[['position', 'speed', 'x', 'y']] = df[['position', 'speed',
+                                                  'x',
+                                                  'y']].apply(pd.to_numeric)
         return df
