@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import math
 import csv
 from pandas import DataFrame
 import pandas as pd
@@ -24,7 +23,6 @@ def time_average(probe_file='data/output/salida.xml', start=0):
         t = c.split(".")[0]
         t = t.split("_")[1]
         types.append(t)
-        data = {}
 
     types = set(types)
     data = {}
