@@ -5,6 +5,7 @@ from pandas import DataFrame
 from sumo_utilities.simulation import build_routes, run_simulation, parse_types
 from sumo_utilities.driving_cycles import time_average, space_average
 from sumo_utilities.driving_cycles import write_advisor_files
+from xml_handlers.parsers.v_type_probe_parser import v_type_probe_parse
 
 matplotlib.style.use('ggplot')
 # Constants
@@ -36,4 +37,25 @@ car_time = DataFrame(resultados_time).transpose()
 # fig, axes = plt.subplots(nrows=1, ncols=2)
 car_time.plot()
 # car_space.plot(ax=axes[1])
+plt.show()
+
+# Experimento para cortar todos los ciclos a partir de 50 metros
+# y graficarlos
+build_routes(30, 60, types, duplicate=True)
+run_simulation()
+datos = []
+parsed_vehicles = v_type_probe_parse('data/output/salida.xml')
+for k, v in parsed_vehicles.items():
+    if 'car' in k:
+        df = v.as_DataFrame()
+        start_index = min(df[df['position'] > 50].index.tolist())
+        df = df[start_index:]
+        datos.append(df)
+
+ciclos = [d[['position', 'speed']] for d in datos]
+fig = plt.figure()
+ax = fig.add_subplot(111)
+for c in ciclos:
+    ax.scatter(c['position'].as_matrix(), c['speed'].as_matrix(), marker="o")
+
 plt.show()
