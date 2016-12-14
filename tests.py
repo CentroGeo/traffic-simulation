@@ -50,14 +50,14 @@ parsed_vehicles = v_type_probe_parse('data/output/salida.xml')
 for k, v in parsed_vehicles.items():
     if 'car' in k:
         df = v.as_DataFrame()
-        start_index = min(df[df['position'] > 50].index.tolist())
+        start_index = min(df[df['position'] > 250].index.tolist())
         df = df[start_index:]
         df = df.reset_index(drop=True)
         datos[k] = df
 
 out = pd.concat(datos.values(), axis=1, keys=datos.keys())
 out_flat = out.stack(0).reset_index().drop('level_0', axis=1)
-g = sns.FacetGrid(out_flat, hue='level_1', size=8)
-g.map(plt.scatter, 'position', 'speed')
-g.map(plt.plot, 'position', 'speed')
+g = sns.FacetGrid(out_flat, hue='level_1', size=5)
+g.map(plt.scatter, 'position', 'speed', s=10, alpha=0.6)
+g.map(plt.plot, 'position', 'speed', linewidth=0.5, alpha=0.6)
 plt.show()
