@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 import matplotlib.pyplot as plt
 import matplotlib
+import seaborn as sns
 from pandas import DataFrame
+import pandas as pd
 from sumo_utilities.simulation import build_routes, run_simulation, parse_types
-from sumo_utilities.driving_cycles import time_average, space_average
+from sumo_utilities.driving_cycles import time_average
 from sumo_utilities.driving_cycles import write_advisor_files
 from xml_handlers.parsers.v_type_probe_parser import v_type_probe_parse
 
@@ -43,19 +45,19 @@ plt.show()
 # y graficarlos
 build_routes(30, 60, types, duplicate=True)
 run_simulation()
-datos = []
+datos = {}
 parsed_vehicles = v_type_probe_parse('data/output/salida.xml')
 for k, v in parsed_vehicles.items():
     if 'car' in k:
         df = v.as_DataFrame()
         start_index = min(df[df['position'] > 50].index.tolist())
         df = df[start_index:]
-        datos.append(df)
+        df = df.reset_index(drop=True)
+        datos[k] = df
 
-ciclos = [d[['position', 'speed']] for d in datos]
-fig = plt.figure()
-ax = fig.add_subplot(111)
-for c in ciclos:
-    ax.scatter(c['position'].as_matrix(), c['speed'].as_matrix(), marker="o")
-
+out = pd.concat(datos.values(), axis=1, keys=datos.keys())
+out_flat = out.stack(0).reset_index().drop('level_0', axis=1)
+g = sns.FacetGrid(out_flat, hue='level_1', size=8)
+g.map(plt.scatter, 'position', 'speed')
+g.map(plt.plot, 'position', 'speed')
 plt.show()
