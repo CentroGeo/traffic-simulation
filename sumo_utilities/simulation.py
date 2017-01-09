@@ -4,6 +4,8 @@ import csv
 from models.vehicle import VehicleType
 from models.flow import Flow
 from xml_handlers.writers.flows_writer import FlowsWriter
+from xml_handlers.parsers.v_type_probe_parser import v_type_probe_parse
+from pandas import DataFrame
 # Constants
 NET = 'data/sumo_topes_2016.net.xml'
 OUT_FLOWS = 'data/hourly_flows.xml'
@@ -96,3 +98,25 @@ def parse_types(types_file):
             row = [conv(d) for d in row]
             types.append(tuple(row))
     return types
+
+
+def count_averages(start_count, end_count, increment, types):
+    car_counts = list(range(10, 100, 10))
+    promedios = {}
+    for cuantos in car_counts:
+        build_routes(cuantos, 60, types, duplicate=True)
+        run_simulation()
+        parsed_vehicles = v_type_probe_parse('data/output/salida.xml')
+        datos = []
+        for k, v in parsed_vehicles.items():
+            if 'car' in k:
+                df = v.as_DataFrame()
+                start_index = min(df[df['position'] > 100].index.tolist())
+                df = df[start_index:]
+                df = df.reset_index(drop=True)
+                datos.append(df['speed'])
+        tmp_df = DataFrame(datos).transpose()
+        tmp_avg = tmp_df.mean(axis=1)
+        promedios[str(cuantos)] = tmp_avg
+
+    return DataFrame(promedios)

@@ -5,6 +5,7 @@ import seaborn as sns
 from pandas import DataFrame
 import pandas as pd
 from sumo_utilities.simulation import build_routes, run_simulation, parse_types
+from sumo_utilities.simulation import count_averages
 from sumo_utilities.driving_cycles import time_average
 from sumo_utilities.driving_cycles import write_advisor_files
 from xml_handlers.parsers.v_type_probe_parser import v_type_probe_parse
@@ -14,6 +15,7 @@ matplotlib.style.use('ggplot')
 NET = 'data/sumo_topes_2016.net.xml'
 OUT_FLOWS = 'data/hourly_flows.xml'
 OUT_ROUTS = 'data/routes.rou.xml'
+
 CONFIG = 'data/adhoc.sumocfg'
 TYPES = 'data/new_types.csv'
 
@@ -63,25 +65,7 @@ g.map(plt.plot, 'position', 'speed', linewidth=0.5, alpha=0.6)
 plt.show()
 
 # Incrementar número de vehículos y obtener ciclos promedio para cada conteo
-
-car_counts = list(range(10, 100, 10))
-promedios = {}
-for cuantos in car_counts:
-    build_routes(cuantos, 60, types, duplicate=True)
-    run_simulation()
-    parsed_vehicles = v_type_probe_parse('data/output/salida.xml')
-    datos = []
-    for k, v in parsed_vehicles.items():
-        if 'car' in k:
-            df = v.as_DataFrame()
-            start_index = min(df[df['position'] > 250].index.tolist())
-            df = df[start_index:]
-            df = df.reset_index(drop=True)
-            datos.append(df['speed'])
-    tmp_df = DataFrame(datos).transpose()
-    tmp_avg = tmp_df.mean(axis=1)
-    promedios[str(cuantos)] = tmp_avg
-    
-resultado = DataFrame(promedios)
+   
+resultado = count_averages(10, 100, 10, types)
 resultado.plot()
 plt.show()
