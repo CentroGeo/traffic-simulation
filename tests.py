@@ -65,7 +65,7 @@ g.map(plt.plot, 'position', 'speed', linewidth=0.5, alpha=0.6)
 plt.show()
 
 # Incrementar número de vehículos y obtener ciclos promedio para cada conteo
-   
+ 
 resultado = count_averages(10, 100, 10, types)
 resultado.plot()
 plt.show()
