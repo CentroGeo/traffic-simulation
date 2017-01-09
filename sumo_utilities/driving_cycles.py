@@ -30,7 +30,7 @@ def time_average(probe_file='data/output/salida.xml', start=0):
         data[t] = {}
         for k, v in parsed_vehicles.items():
             if t in v.id:
-                data[t][v.id] = [float(s) for s in v.speeds]
+                data[t][v.id] = v.as_DataFrame()
 
     # Cortamos con el menor tiempo de recorrido para cada tipo:
     for k, v in data.items():
@@ -45,7 +45,6 @@ def time_average(probe_file='data/output/salida.xml', start=0):
     for v_type, cycle in data.items():
         df = DataFrame(cycle)
         series[v_type] = df.mean(axis=1)
-
     avg_df = DataFrame(series)
     avg_df.index.name = 'tiempo'
     return avg_df

@@ -61,3 +61,27 @@ g = sns.FacetGrid(out_flat, hue='level_1', size=5)
 g.map(plt.scatter, 'position', 'speed', s=10, alpha=0.6)
 g.map(plt.plot, 'position', 'speed', linewidth=0.5, alpha=0.6)
 plt.show()
+
+# Incrementar número de vehículos y obtener ciclos promedio para cada conteo
+
+car_counts = list(range(10, 100, 10))
+promedios = {}
+for cuantos in car_counts:
+    build_routes(cuantos, 60, types, duplicate=True)
+    run_simulation()
+    parsed_vehicles = v_type_probe_parse('data/output/salida.xml')
+    datos = []
+    for k, v in parsed_vehicles.items():
+        if 'car' in k:
+            df = v.as_DataFrame()
+            start_index = min(df[df['position'] > 250].index.tolist())
+            df = df[start_index:]
+            df = df.reset_index(drop=True)
+            datos.append(df['speed'])
+    tmp_df = DataFrame(datos).transpose()
+    tmp_avg = tmp_df.mean(axis=1)
+    promedios[str(cuantos)] = tmp_avg
+    
+resultado = DataFrame(promedios)
+resultado.plot()
+plt.show()
