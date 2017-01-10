@@ -100,8 +100,15 @@ def parse_types(types_file):
     return types
 
 
-def count_averages(start_count, end_count, increment, types):
-    car_counts = list(range(10, 100, 10))
+def count_averages(types, start_count=10, end_count=10, increment=10,
+                   start_pos=10):
+    """Regresa un DataFrame con los ciclos promedios para cada simulación.
+
+       Se corre una simulación para cada conteo desde start_count hasta
+       end_count en incrementos de increment
+       types es la lista de tipos regresada por parse_types.
+    """
+    car_counts = list(range(start_count, end_count, increment))
     promedios = {}
     for cuantos in car_counts:
         build_routes(cuantos, 60, types, duplicate=True)
@@ -111,7 +118,7 @@ def count_averages(start_count, end_count, increment, types):
         for k, v in parsed_vehicles.items():
             if 'car' in k:
                 df = v.as_DataFrame()
-                start_index = min(df[df['position'] > 100].index.tolist())
+                start_index = min(df[df['position'] > start_pos].index.tolist())
                 df = df[start_index:]
                 df = df.reset_index(drop=True)
                 datos.append(df['speed'])
