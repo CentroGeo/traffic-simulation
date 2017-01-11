@@ -25,6 +25,37 @@ smoothed = resultado.rolling(10).mean()
 diff = smoothed.diff(periods=3).rolling(5).mean()
 # diff = smoothed.diff(periods=3)
 
+# Función para obtener los cruces en cero:
+
+
+def zero_crosses(diff, start, end, increment):
+    zeros = {}
+    for count in range(start, end, increment):
+        # Hacemos una lista de los índices dónde la derivada es mayor que cero:
+        greater_0 = diff[abs(diff[str(count)]) >= 0.05].index.tolist()    
+        # Partimos la lista de mayores de cero en  pedazos consecutivos
+        chunks = []
+        for k, g in groupby(enumerate(greater_0), lambda x: x[0] - x[1]):
+            chunks.append(list(map(itemgetter(1), g)))
+        zeros[str(count)] = chunks
+
+    # Para cada lista, tomamos el primer elemento de cada chunk,
+    # esos son los cruces en cero:
+    zero_crosses = {}
+    for k, v in zeros.items():
+        this_count = []
+        for l in v:
+            this_count.append(v[0])
+        zero_crosses[k] = this_count
+
+    return zero_crosses
+
+
+zeroes = zero_crosses(diff, 10, 100, 10)
+print(zeroes)
+
+
+
 f, axarr = plt.subplots(4, sharex=True)
 smoothed.plot(ax=axarr[0])
 diff.plot(ax=axarr[1])
