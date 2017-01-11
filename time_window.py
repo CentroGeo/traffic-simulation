@@ -45,7 +45,7 @@ def zero_crosses(diff, start, end, increment):
     for k, v in zeros.items():
         this_count = []
         for l in v:
-            this_count.append(v[0])
+            this_count.append(l[0])
         zero_crosses[k] = this_count
 
     return zero_crosses
