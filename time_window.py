@@ -100,3 +100,7 @@ zeroes = zero_crosses(diff, 10, 100, 10)
 graficame = [10, 50, 90]
 colores = ['red', 'green', 'blue']
 plot_windows(graficame, colores, smoothed, diff, zeroes)
+lengths = time_window_length(zeroes)
+lengths = lengths.sort_values(by=0).reset_index()
+lengths[1].plot()
+plt.show()
