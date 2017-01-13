@@ -5,6 +5,7 @@ from models.vehicle import VehicleType
 from models.flow import Flow
 from xml_handlers.writers.flows_writer import FlowsWriter
 from xml_handlers.parsers.v_type_probe_parser import v_type_probe_parse
+from xml_handlers.parsers.induction_loop_parser import induction_loop_parser
 from pandas import DataFrame
 # Constants
 NET = 'data/sumo_topes_2016.net.xml'
@@ -102,7 +103,9 @@ def parse_types(types_file):
 
 def count_averages(types, start_count=10, end_count=10, increment=10,
                    start_pos=10):
-    """Regresa un DataFrame con los ciclos promedios para cada simulación.
+    """ Regresa un DataFrame con los ciclos promedios para cada simulación
+        y un diccionario con los conteos medidos (induction loop) antes del
+        tope.
 
        Se corre una simulación para cada conteo desde start_count hasta
        end_count en incrementos de increment
@@ -110,10 +113,15 @@ def count_averages(types, start_count=10, end_count=10, increment=10,
     """
     car_counts = list(range(start_count, end_count, increment))
     promedios = {}
+    real_counts = {}
     for cuantos in car_counts:
         build_routes(cuantos, 60, types, duplicate=True)
         run_simulation()
         parsed_vehicles = v_type_probe_parse('data/output/salida.xml')
+        # Leo la salida del induction loop para saber exáctamente cuántos
+        # coches pasan
+        real_counts[str(cuantos)] = induction_loop_parser(
+                                    'data/output/induction_out.xml')
         datos = []
         for k, v in parsed_vehicles.items():
             if 'car' in k:
@@ -126,4 +134,4 @@ def count_averages(types, start_count=10, end_count=10, increment=10,
         tmp_avg = tmp_df.mean(axis=1)
         promedios[str(cuantos)] = tmp_avg
 
-    return DataFrame(promedios)
+    return (DataFrame(promedios), real_counts)

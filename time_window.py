@@ -89,7 +89,7 @@ def time_window_length(zeroes):
 # Leo los tipos de vehículos
 types = parse_types('data/new_types.csv')
 # Calculo los ciclos promedio para diferentes conteos
-resultado = count_averages(types, 10, 100, 10, 80)
+resultado, real_counts = count_averages(types, 10, 100, 10, 80)
 # Suavizo con el promedio de 5 mediciones
 smoothed = resultado.rolling(10).mean()
 # Calculo la derivada y la suavizo
