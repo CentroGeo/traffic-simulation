@@ -63,10 +63,15 @@ def plot_windows(counts, color_list, ciclos, derivadas, real_counts, zeroes):
     gs = gridspec.GridSpec(grid_rows + 1, 2, width_ratios=[3, 5])
     ax2 = plt.subplot(gs[2:grid_rows + 1, 1])
     ax1 = plt.subplot(gs[0:2, 1])
+    ax1.set_title('Ciclos Promedio')
+    ax2.set_title('Aceleraciones')
     smoothed[[str(i) for i in counts]].plot(ax=ax1, colormap=cmap)
     diff[[str(i) for i in counts]].plot(ax=ax2, colormap=cmap)
     ax2.axhline(y=0.05, linestyle='dashed', color='black')
     ax2.axhline(y=-0.05, linestyle='dashed', color='black')
+    ax2.set_xlabel('Tiempo')
+    ax1.set_ylabel('Velocidad')
+    ax2.set_ylabel('Aceleración')
     # plt.tight_layout()
     for i, c in enumerate(counts):
         ax1.axvline(x=zeroes[str(c)][0], linestyle='dashed',
@@ -75,9 +80,12 @@ def plot_windows(counts, color_list, ciclos, derivadas, real_counts, zeroes):
                     color=cmap(i))
         if i == 0:
             bar_ax = plt.subplot(gs[i, 0])
+            bar_ax.set_title('Conteos medidos')
         else:
             bar_ax = plt.subplot(gs[i, 0], sharex=bar_ax)
-        real_counts[str(c)].plot.bar(ax=bar_ax, color=cmap(i))
+        bar_ax.set_xlabel('Tiempo')
+        bar_ax.set_ylabel('Conteo')
+        real_counts[str(c)].plot.bar(ax=bar_ax, color=cmap(i), legend=False)
     gs.tight_layout(fig)
     plt.show()
 
