@@ -2,6 +2,7 @@
 import matplotlib.pyplot as plt
 import matplotlib
 from matplotlib import colors
+import matplotlib.gridspec as gridspec
 from sumo_utilities.simulation import count_averages, parse_types
 from operator import itemgetter
 from itertools import groupby
@@ -56,19 +57,28 @@ def plot_windows(counts, color_list, ciclos, derivadas, real_counts, zeroes):
                 calculado por zero_crosses
 
     """
+    fig = plt.figure(1)
     cmap = colors.ListedColormap(color_list)
-    f, (ax1, ax2) = plt.subplots(nrows=2, sharex=True)
+    grid_rows = len(counts)
+    gs = gridspec.GridSpec(grid_rows + 1, 2, width_ratios=[3, 5])
+    ax2 = plt.subplot(gs[2:grid_rows + 1, 1])
+    ax1 = plt.subplot(gs[0:2, 1])
     smoothed[[str(i) for i in counts]].plot(ax=ax1, colormap=cmap)
     diff[[str(i) for i in counts]].plot(ax=ax2, colormap=cmap)
     ax2.axhline(y=0.05, linestyle='dashed', color='black')
     ax2.axhline(y=-0.05, linestyle='dashed', color='black')
+    # plt.tight_layout()
     for i, c in enumerate(counts):
-        print(cmap(i))
         ax1.axvline(x=zeroes[str(c)][0], linestyle='dashed',
                     color=cmap(i))
         ax1.axvline(x=zeroes[str(c)][3], linestyle='dashed',
                     color=cmap(i))
-
+        if i == 0:
+            bar_ax = plt.subplot(gs[i, 0])
+        else:
+            bar_ax = plt.subplot(gs[i, 0], sharex=bar_ax)
+        real_counts[str(c)].plot.bar(ax=bar_ax, color=cmap(i))
+    gs.tight_layout(fig)
     plt.show()
 
 
@@ -92,13 +102,13 @@ types = parse_types('data/new_types.csv')
 resultado, real_counts = count_averages(types, 10, 100, 10, 80)
 # Procesamos los real_counts para producir un DataFrame por cada
 # count original
-counts_df = {}
+counts_dict = {}
 for k, v in real_counts.items():
     tmp_df = DataFrame.from_dict(v, orient='index')
     tmp_df.index = tmp_df.index.map(float)
     tmp_df.index = tmp_df.index.map(int)
     tmp_df = tmp_df.sort_index()
-    counts_df[k] = tmp_df
+    counts_dict[k] = tmp_df
 
 # Suavizo los ciclos promedio con el promedio de 10 mediciones
 smoothed = resultado.rolling(10).mean()
@@ -110,7 +120,7 @@ zeroes = zero_crosses(diff, 10, 100, 10)
 # conteos reales:
 graficame = [10, 50, 90]
 colores = ['red', 'green', 'blue']
-plot_windows(graficame, colores, smoothed, diff, zeroes)
+plot_windows(graficame, colores, smoothed, diff, counts_dict, zeroes)
 lengths = time_window_length(zeroes)
 lengths = lengths.sort_values(by=0).reset_index()
 lengths[1].plot()
