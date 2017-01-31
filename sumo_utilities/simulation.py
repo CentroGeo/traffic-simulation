@@ -14,7 +14,8 @@ OUT_ROUTS = 'data/routes.rou.xml'
 CONFIG = 'data/adhoc.sumocfg'
 
 
-def build_routes(count, interval, vehicle_types, duplicate=False):
+def build_routes(count, interval, vehicle_types,
+                 net='data/sumo_topes_2016.net.xml', duplicate=False):
     """Escribe el arcivo de flujos y el de rutas.
        param: count int: total de vehículos en la simulación
        param: interval int: Duración de la simulación
@@ -37,7 +38,7 @@ def build_routes(count, interval, vehicle_types, duplicate=False):
         v_type = VehicleType(*v[0:3])
         number = int(round(v[3] * float(count)))  # cuantos de cada tipo
         flows.append(Flow('f_' + v[0], v_type, "0",
-                          str(interval), '-32995#0', '-32995#2.389.456',
+                          str(interval), 'entrance', 'exit',
                           str(number), 'max', 'free', 'best', 'max'))
     flows_writer = FlowsWriter(flows)
     flows_writer.write_xml(OUT_FLOWS)
@@ -50,7 +51,7 @@ def build_routes(count, interval, vehicle_types, duplicate=False):
     # call to duarouter:
     try:
         subprocess.check_call(["duarouter", "--flows=" + OUT_FLOWS,
-                               "--net=" + NET,
+                               "--net=" + net,
                                "--output-file=" + OUT_ROUTS])
     except subprocess.CalledProcessError:
         pass  # handle errors in the called executable
@@ -59,7 +60,7 @@ def build_routes(count, interval, vehicle_types, duplicate=False):
     print('routing done')
 
 
-def run_simulation():
+def run_simulation(config='data/cars.sumocfg'):
     """Corre la simulación utilizando la configuración de data/adhoc.sumocfg.
 
        Los flujos siempre van a ser data/hourly_flows.xml y las rutas
@@ -76,7 +77,7 @@ def run_simulation():
         pass
 
     try:
-        subprocess.check_call(["sumo", "--configuration-file=" + CONFIG])
+        subprocess.check_call(["sumo", "--configuration-file=" + config])
     except subprocess.CalledProcessError:
         pass  # handle errors in the called executable
     except OSError:
@@ -102,7 +103,8 @@ def parse_types(types_file):
 
 
 def count_averages(types, start_count=10, end_count=10, increment=10,
-                   start_pos=10):
+                   start_pos=10, net='data/topes_2017_simple.net.xml',
+                   config='data/cars.sumocfg'):
     """ Regresa un DataFrame con los ciclos promedios para cada simulación
         y un diccionario con los conteos medidos (induction loop) antes del
         tope.
@@ -115,8 +117,8 @@ def count_averages(types, start_count=10, end_count=10, increment=10,
     promedios = {}
     real_counts = {}
     for cuantos in car_counts:
-        build_routes(cuantos, 60, types, duplicate=True)
-        run_simulation()
+        build_routes(cuantos, 60, types, net=net, duplicate=True)
+        run_simulation(config=config)
         parsed_vehicles = v_type_probe_parse('data/output/salida.xml')
         # Leo la salida del induction loop para saber exáctamente cuántos
         # coches pasan

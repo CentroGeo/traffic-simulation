@@ -30,7 +30,7 @@ class VehicleType():
         self.v_type = v_type
 
         if v_type == 'car':
-            self.sigma = "0.5"
+            self.sigma = "0.7"
             self.length = "5"
             self.maxspeed = "120"
             self.color = "1,1,0"
@@ -38,7 +38,7 @@ class VehicleType():
             self.color = "0,1,0"
             #self.guiShape = "car"
         elif v_type == 'bus':
-            self.sigma = "0.5"
+            self.sigma = "0.7"
             self.length = "20"
             self.maxspeed = "70"
             self.color = "0,0,1"
@@ -46,14 +46,14 @@ class VehicleType():
             self.color = "0,0,1"
             self.guiShape = "bus"
         elif v_type == 'suv':
-            self.sigma = "0.5"
+            self.sigma = "0.7"
             self.length = "7"
             self.maxspeed = "70"
             self.color = "0,0,1"
             self.speedDev = "0.1"
             self.color = "1,1,0"
         elif v_type == 'microbus':
-            self.sigma = "0.5"
+            self.sigma = "0.7"
             self.length = "15"
             self.maxspeed = "25"
             self.color = "0,0,1"
@@ -61,7 +61,7 @@ class VehicleType():
             self.color = "1,0,0"
             self.guiShape = "bus"
         else:
-            self.sigma = "0.5"
+            self.sigma = "0.7"
             self.length = "7.5"
             self.maxspeed = "120"
             self.color = "0,1,0"

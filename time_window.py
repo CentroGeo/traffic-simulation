@@ -76,8 +76,12 @@ def plot_windows(counts, color_list, ciclos, derivadas, real_counts, zeroes):
     for i, c in enumerate(counts):
         ax1.axvline(x=zeroes[str(c)][0], linestyle='dashed',
                     color=cmap(i))
-        ax1.axvline(x=zeroes[str(c)][3], linestyle='dashed',
-                    color=cmap(i))
+        if len(zeroes[str(c)]) > 3:
+            ax1.axvline(x=zeroes[str(c)][3], linestyle='dashed',
+                        color=cmap(i))
+        else:
+            ax1.axvline(x=zeroes[str(c)][-1], linestyle='dashed',
+                        color=cmap(i))
         if i == 0:
             bar_ax = plt.subplot(gs[i, 0])
             bar_ax.set_title('Conteos medidos')
