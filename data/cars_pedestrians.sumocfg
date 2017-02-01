@@ -4,7 +4,7 @@
 
     <input>
         <net-file value="topes_2017_pedestrians.net.xml"/>
-        <route-files value="routes.rou.xml"/>
+        <route-files value="routes.rou.xml,pedestrians.trip.xml"/>
         <additional-files value="additional.add.xml"/>
     </input>
 

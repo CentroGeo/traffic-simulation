@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!-- generated on 2016-09-22 13:28:39.062000 by $Id: randomTrips.py 20482 2016-04-18 20:49:42Z behrisch $
+  options: 
+-->
+<trips>
+    <person id="ped0" depart="137" >
+        <walk from="gneE0.0" to="gneE2" departPos="random" arrivalPos="random"/>
+    </person>
+    <person id="ped1" depart="138" >
+        <walk from="gneE0.0" to="gneE2" departPos="random" arrivalPos="random"/>
+    </person>
+    <person id="ped2" depart="139" >
+        <walk from="gneE0.0" to="gneE2" departPos="random" arrivalPos="random"/>
+    </person>
+    <person id="ped3" depart="140" >
+        <walk from="gneE0.0" to="gneE2" departPos="random" arrivalPos="random"/>
+    </person>
+    <person id="ped4" depart="141" >
+        <walk from="gneE0.0" to="gneE2" departPos="random" arrivalPos="random"/>
+    </person>
+
+    
+    <!-- <person id="ped2" depart="36.00" > -->
+    <!--     <walk from="EndLT" to="EndRB" departPos="random" arrivalPos="random"/> -->
+    <!-- </person> -->
+    <!-- <person id="ped3" depart="48.00" > -->
+    <!--     <walk from="EndLMB" to="EndRT" departPos="random" arrivalPos="random"/> -->
+    <!-- </person> -->
+    <!-- <person id="ped4" depart="59.00" > -->
+    <!--     <walk from="CS1" to="NC1" departPos="random" arrivalPos="random"/> -->
+    <!-- </person> -->
+    <!-- <person id="ped5" depart="70.00" > -->
+    <!--     <walk from="CS2" to="NC2" departPos="random" arrivalPos="random"/> -->
+    <!-- </person> -->
+    <!-- <person id="ped6" depart="71.00" > -->
+    <!--     <walk from="CS2" to="NC2" departPos="random" arrivalPos="random"/> -->
+    <!-- </person> -->
+    <!-- <person id="ped7" depart="82.00" > -->
+    <!--     <walk from="CS1" to="NC1" departPos="random" arrivalPos="random"/> -->
+    <!-- </person> -->
+    <!-- <person id="ped8" depart="84.00" > -->
+    <!--     <walk from="NC1" to="CS1" departPos="random" arrivalPos="random"/> -->
+    <!-- </person> -->
+    <!-- <person id="ped9" depart="87.00" > -->
+    <!--     <walk from="NC2" to="CS2" departPos="random" arrivalPos="random"/> -->
+    <!-- </person> -->
+    <!-- <person id="ped10" depart="92.00" > -->
+    <!--     <walk from="CS1" to="NC1" departPos="random" arrivalPos="random"/> -->
+    <!-- </person> -->
+    <!-- <person id="ped11" depart="94.00" > -->
+    <!--     <walk from="CS2" to="NC2" departPos="random" arrivalPos="random"/> -->
+    <!-- </person> -->
+    <!-- <person id="ped12" depart="97.00" > -->
+    <!--     <walk from="CS2" to="NC2" departPos="random" arrivalPos="random"/> -->
+    <!-- </person> -->
+    <!-- <person id="ped13" depart="99.00" > -->
+    <!--     <walk from="NC1" to="CS1" departPos="random" arrivalPos="random"/> -->
+    <!-- </person> -->
+       
+</trips>
