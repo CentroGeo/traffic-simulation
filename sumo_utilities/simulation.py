@@ -113,7 +113,7 @@ def parse_types(types_file):
 def count_averages(types, start_count=10, end_count=10, increment=10,
                    start_pos=10, net='data/topes_2017_simple.net.xml',
                    config='data/cars.sumocfg', pedestrians=False,
-                   emissions=False):
+                   emissions=False, write_advisor_files=False):
     """ Regresa un DataFrame con los ciclos promedios para cada simulación
         y un diccionario con los conteos medidos (induction loop) antes del
         tope.
@@ -138,6 +138,15 @@ def count_averages(types, start_count=10, end_count=10, increment=10,
         for k, v in parsed_vehicles.items():
             if 'car' in k:
                 df = v.as_DataFrame()
+                if write_advisor_files:
+                    out_path = "data/output/" + str(cuantos)
+                    if not os.path.exists(out_path):
+                        os.makedirs(out_path)
+
+                    f_name = out_path + "/sumo_" + k.replace('.', '_')[2:] +\
+                        ".csv"
+                    df.to_csv(f_name)
+
                 start_index = min(df[df['position'] > start_pos].index.tolist())
                 df = df[start_index:]
                 df = df.reset_index(drop=True)
