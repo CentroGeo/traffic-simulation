@@ -13,7 +13,7 @@ types = parse_types('data/new_types.csv')
 resultado, real_counts = count_averages(types, 10, 100, 10, 80,
                                         net='data/topes_2017_pedestrians.net.xml',
                                         config='data/cars_pedestrians.sumocfg',
-                                        pedestrians=True)
+                                        pedestrians=True, emissions=True)
 # Procesamos los real_counts para producir un DataFrame por cada
 # count original
 counts_dict = {}

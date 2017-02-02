@@ -60,7 +60,8 @@ def build_routes(count, interval, vehicle_types,
     print('routing done')
 
 
-def run_simulation(config='data/cars.sumocfg', pedestrians=False):
+def run_simulation(config='data/cars.sumocfg', pedestrians=False,
+                   emissions=False):
     """Corre la simulación utilizando la configuración de data/adhoc.sumocfg.
 
        Los flujos siempre van a ser data/hourly_flows.xml y las rutas
@@ -76,12 +77,15 @@ def run_simulation(config='data/cars.sumocfg', pedestrians=False):
     except:
         pass
 
+    options = ["sumo", "--configuration-file=" + config]
+    if pedestrians:
+        options.append("--pedestrian.model=striping")
+
+    if emissions:
+        options.append("--emission-output=data/output/emisions.xml")
+
     try:
-        if not pedestrians:
-            subprocess.check_call(["sumo", "--configuration-file=" + config])
-        else:
-            subprocess.check_call(["sumo", "--configuration-file=" + config,
-                                   "--pedestrian.model=striping"])
+        subprocess.check_call(options)
     except subprocess.CalledProcessError:
         pass  # handle errors in the called executable
     except OSError:
@@ -108,7 +112,8 @@ def parse_types(types_file):
 
 def count_averages(types, start_count=10, end_count=10, increment=10,
                    start_pos=10, net='data/topes_2017_simple.net.xml',
-                   config='data/cars.sumocfg', pedestrians=False):
+                   config='data/cars.sumocfg', pedestrians=False,
+                   emissions=False):
     """ Regresa un DataFrame con los ciclos promedios para cada simulación
         y un diccionario con los conteos medidos (induction loop) antes del
         tope.
@@ -122,7 +127,8 @@ def count_averages(types, start_count=10, end_count=10, increment=10,
     real_counts = {}
     for cuantos in car_counts:
         build_routes(cuantos, 60, types, net=net, duplicate=True)
-        run_simulation(config=config, pedestrians=pedestrians)
+        run_simulation(config=config, pedestrians=pedestrians,
+                       emissions=emissions)
         parsed_vehicles = v_type_probe_parse('data/output/salida.xml')
         # Leo la salida del induction loop para saber exáctamente cuántos
         # coches pasan
