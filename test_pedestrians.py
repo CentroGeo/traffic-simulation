@@ -10,7 +10,7 @@ matplotlib.style.use('ggplot')
 
 types = parse_types('data/new_types.csv')
 # Calculo los ciclos promedio para diferentes conteos
-resultado, real_counts = count_averages(types, 10, 100, 10, 80,
+resultado, real_counts = count_averages(types, 10, 30, 10, 80,
                                         net='data/topes_2017_pedestrians.net.xml',
                                         config='data/cars_pedestrians.sumocfg',
                                         pedestrians=True, emissions=True,

@@ -30,6 +30,7 @@ class FlowsWriter():
             v_type_element.set("length", v.length)
             v_type_element.set("maxspeed", v.maxspeed)
             v_type_element.set("color", v.color)
+            v_type_element.set("emissionClass", v.emissionClass)
             if hasattr(v, "guiShape"):
                 v_type_element.set("guiShape", v.guiShape)
 
