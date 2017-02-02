@@ -15,6 +15,7 @@ class VehicleType():
     str color: color (r,g,b)
     str guiShape: The shape to be used in the gui
     str speedDev: Standard dev for speed
+    str emissionClass: vehicle's emission class
     """
 
     def __init__(self, v_type, accel=0.65, deccel=0.4, id=None):
@@ -36,7 +37,8 @@ class VehicleType():
             self.color = "1,1,0"
             self.speedDev = "0.1"
             self.color = "0,1,0"
-            #self.guiShape = "car"
+            self.emissionClass = "PC_G_EU3"
+            # self.guiShape = "car"
         elif v_type == 'bus':
             self.sigma = "0.7"
             self.length = "20"
@@ -45,6 +47,7 @@ class VehicleType():
             self.speedDev = "0.1"
             self.color = "0,0,1"
             self.guiShape = "bus"
+            self.emissionClass = "HDV_D_EU1"
         elif v_type == 'suv':
             self.sigma = "0.7"
             self.length = "7"
@@ -52,6 +55,7 @@ class VehicleType():
             self.color = "0,0,1"
             self.speedDev = "0.1"
             self.color = "1,1,0"
+            self.emissionClass = "LDV_G_EU3"
         elif v_type == 'microbus':
             self.sigma = "0.7"
             self.length = "15"
@@ -60,6 +64,7 @@ class VehicleType():
             self.speedDev = "0.1"
             self.color = "1,0,0"
             self.guiShape = "bus"
+            self.emissionClass = "LDV_G_EU0"
         else:
             self.sigma = "0.7"
             self.length = "7.5"
@@ -67,7 +72,7 @@ class VehicleType():
             self.color = "0,1,0"
             self.speedDev = "0.1"
             self.color = "0,1,0"
-            #self.guiShape = "car"
+            self.emissionClass = "LDV_G_EU0"
 
 
 class OutputVehicle():
