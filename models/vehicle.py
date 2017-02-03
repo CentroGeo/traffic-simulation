@@ -137,3 +137,46 @@ class OutputVehicle():
                                                   'x',
                                                   'y']].apply(pd.to_numeric)
         return df
+
+
+class OutputEmissions():
+
+    def __init__(self, id, timestep, co2, co, hc, nox, pmx, fuel, noise):
+        """Inicializa un nuevo vehiculo con los parámetros correspondientes."""
+        self.id = id
+        self.timesteps = [timestep]
+        self.co2 = [co2]
+        self.co = [co]
+        self.hc = [hc]
+        self.nox = [nox]
+        self.pmx = [pmx]
+        self.fuel = [fuel]
+        self.noise = [noise]
+
+    def append_timestep(self, timestep, co2, co, hc, nox, pmx, fuel, noise):
+        """ Appends timestep info to existing vehicle.
+
+            Fails if called on a unexisting vehicle (should fix that)
+        """
+
+        if timestep not in self.timesteps:
+            self.timesteps.append(timestep)
+            self.co2.append(co2)
+            self.co.append(co)
+            self.hc.append(hc)
+            self.nox.append(nox)
+            self.pmx.append(pmx)
+            self.fuel.append(fuel)
+            self.noise.append(noise)
+
+    def as_DataFrame(self):
+        """Regresa un DataFrame con las variables para cada timestep."""
+
+        d = {'global_timestep': self.timesteps, 'CO2': self.co2,
+             'CO': self.co, 'HC': self.hc, 'NOx': self.nox, 'PMx': self.nox,
+             'Fuel': self.fuel, 'Noise': self.noise}
+        df = DataFrame(d)
+        # df[['position', 'speed', 'x', 'y']] = df[['position', 'speed',
+        #                                           'x',
+        #                                           'y']].apply(pd.to_numeric)
+        return df

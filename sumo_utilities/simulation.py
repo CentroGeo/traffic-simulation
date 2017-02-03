@@ -5,6 +5,7 @@ from models.vehicle import VehicleType
 from models.flow import Flow
 from xml_handlers.writers.flows_writer import FlowsWriter
 from xml_handlers.parsers.v_type_probe_parser import v_type_probe_parse
+from xml_handlers.parsers.v_type_probe_parser import parse_output_emissions
 from xml_handlers.parsers.induction_loop_parser import induction_loop_parser
 from pandas import DataFrame
 # Constants
@@ -82,7 +83,7 @@ def run_simulation(config='data/cars.sumocfg', pedestrians=False,
         options.append("--pedestrian.model=striping")
 
     if emissions:
-        options.append("--emission-output=data/output/emisions.xml")
+        options.append("--emission-output=data/output/emissions.xml")
 
     try:
         subprocess.check_call(options)
@@ -130,6 +131,9 @@ def count_averages(types, start_count=10, end_count=10, increment=10,
         run_simulation(config=config, pedestrians=pedestrians,
                        emissions=emissions)
         parsed_vehicles = v_type_probe_parse('data/output/salida.xml')
+        if emissions:
+            parsed_emissions = parse_output_emissions('data/output/emissions.xml')
+
         # Leo la salida del induction loop para saber exáctamente cuántos
         # coches pasan
         real_counts[str(cuantos)] = induction_loop_parser(
@@ -138,6 +142,8 @@ def count_averages(types, start_count=10, end_count=10, increment=10,
         for k, v in parsed_vehicles.items():
             if 'car' in k:
                 df = v.as_DataFrame()
+                if emissions:
+                    emissions_df = parsed_emissions[k].as_DataFrame()
                 if write_advisor_files:
                     out_path = "data/output/" + str(cuantos)
                     if not os.path.exists(out_path):
@@ -146,6 +152,10 @@ def count_averages(types, start_count=10, end_count=10, increment=10,
                     f_name = out_path + "/sumo_" + k.replace('.', '_')[2:] +\
                         ".csv"
                     df.to_csv(f_name)
+                    if emissions:
+                        e_name = out_path + "/emissions_" + \
+                                 k.replace('.', '_')[2:] + ".csv"
+                        emissions_df.to_csv(e_name)
 
                 start_index = min(df[df['position'] > start_pos].index.tolist())
                 df = df[start_index:]
