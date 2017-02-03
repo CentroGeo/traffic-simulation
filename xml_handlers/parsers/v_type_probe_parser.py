@@ -31,7 +31,9 @@ class OutputVehicleContentHandler(xml.sax.ContentHandler):
                                                 attrs.get('lane'),
                                                 attrs.get('pos'),
                                                 attrs.get('x'),
-                                                attrs.get('y'))
+                                                attrs.get('y'),
+                                                attrs.get('lat'),
+                                                attrs.get('lon'))
             else:
                 if self.time >= self.start:
                     self.parsed_vehicles_ids.add(attrs.get('id'))
@@ -42,7 +44,9 @@ class OutputVehicleContentHandler(xml.sax.ContentHandler):
                         attrs.get('lane'),
                         attrs.get('pos'),
                         attrs.get('x'),
-                        attrs.get('y'))
+                        attrs.get('y'),
+                        attrs.get('lat'),
+                        attrs.get('lon'))
 
     def endElement(self, name):
         pass

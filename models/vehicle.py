@@ -92,7 +92,7 @@ class OutputVehicle():
         list edges: succesion of edges in vehicle route
         float change_position: trip distance at last edge change
     """
-    def __init__(self, id, timestep, speed, lane, position, x, y):
+    def __init__(self, id, timestep, speed, lane, position, x, y, lat, lon):
         """Inicializa un nuevo vehiculo con los parámetros correspondientes."""
         self.id = id
         self.timesteps = [timestep]
@@ -102,10 +102,11 @@ class OutputVehicle():
         self.lanes = [lane]
         self.positions = [float(position)]
         self.coordinates = [(float(x), float(y))]
+        self.geo_coordinates = [(float(lat), float(lon))]
         self.edges = [lane.split('_')[0]]
         self.change_position = 0.0
 
-    def append_timestep(self, timestep, speed, lane, position, x, y):
+    def append_timestep(self, timestep, speed, lane, position, x, y, lat, lon):
         """ Appends timestep info to existing vehicle.
 
             Fails if called on a unexisting vehicle (should fix that)
@@ -123,6 +124,7 @@ class OutputVehicle():
                                       self.change_position + float(position),
                                       float(speed)))
             self.coordinates.append((float(x), float(y)))
+            self.geo_coordinates.append((float(lat), float(lon)))
             self.edges.append(lane.split('_')[0])
 
     def as_DataFrame(self):
@@ -130,12 +132,12 @@ class OutputVehicle():
 
         d = {'global_timestep': self.timesteps, 'speed': self.speeds,
              'position': self.positions,
-             'x': [c[0] for c in self.coordinates],
-             'y': [c[1] for c in self.coordinates]}
+             'lat': [c[0] for c in self.geo_coordinates],
+             'lon': [c[1] for c in self.geo_coordinates]}
         df = DataFrame(d)
-        df[['position', 'speed', 'x', 'y']] = df[['position', 'speed',
-                                                  'x',
-                                                  'y']].apply(pd.to_numeric)
+        df[['position', 'speed', 'lat',
+            'lon']] = df[['position', 'speed', 'lat',
+                          'lon']].apply(pd.to_numeric)
         return df
 
 
