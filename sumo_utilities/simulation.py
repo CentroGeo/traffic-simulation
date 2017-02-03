@@ -153,8 +153,10 @@ def count_averages(types, start_count=10, end_count=10, increment=10,
                         ".csv"
                     df.to_csv(f_name)
                     if emissions:
+                        emissions_df = emissions_df.join(df, how='inner',
+                                                         rsuffix='em')
                         e_name = out_path + "/emissions_" + \
-                                 k.replace('.', '_')[2:] + ".csv"
+                            k.replace('.', '_')[2:] + ".csv"
                         emissions_df.to_csv(e_name)
 
                 start_index = min(df[df['position'] > start_pos].index.tolist())
