@@ -176,7 +176,8 @@ class OutputEmissions():
              'CO': self.co, 'HC': self.hc, 'NOx': self.nox, 'PMx': self.nox,
              'Fuel': self.fuel, 'Noise': self.noise}
         df = DataFrame(d)
-        # df[['position', 'speed', 'x', 'y']] = df[['position', 'speed',
-        #                                           'x',
-        #                                           'y']].apply(pd.to_numeric)
+        df[['CO2', 'CO', 'HC', 'NOx', 'PMx',
+            'Fuel', 'Noise']] = df[['CO2', 'CO', 'HC', 'NOx',
+                                    'PMx', 'Fuel',
+                                    'Noise']].apply(pd.to_numeric)
         return df
