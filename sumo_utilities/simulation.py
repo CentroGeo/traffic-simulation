@@ -7,6 +7,7 @@ from xml_handlers.writers.flows_writer import FlowsWriter
 from xml_handlers.parsers.v_type_probe_parser import v_type_probe_parse
 from xml_handlers.parsers.v_type_probe_parser import parse_output_emissions
 from xml_handlers.parsers.induction_loop_parser import induction_loop_parser
+from xml_handlers.parsers.v_type_probe_parser import parse_output_fcd
 from pandas import DataFrame
 # Constants
 NET = 'data/sumo_topes_2016.net.xml'
@@ -83,7 +84,7 @@ def run_simulation(config='data/cars.sumocfg', pedestrians=False,
         options.append("--pedestrian.model=striping")
         options.append("--fcd-output=data/output/fcd_out.xml")
         options.append("--fcd-output.geo")
-        
+
     if emissions:
         options.append("--emission-output=data/output/emissions.xml")
 
@@ -111,6 +112,15 @@ def parse_types(types_file):
             row = [conv(d) for d in row]
             types.append(tuple(row))
     return types
+
+
+def write_pedestrian_files(fcd_path, cuantos):
+    parsed_pedestrians = parse_output_fcd(fcd_path)
+    for k, v in parsed_pedestrians.items():
+        out_path = "data/output/" + str(cuantos)
+        f_name = out_path + "/sumo_" + k + ".csv"
+        ped_df = v.as_DataFrame()
+        ped_df.to_csv(f_name)
 
 
 def count_averages(types, start_count=10, end_count=10, increment=10,
@@ -165,6 +175,10 @@ def count_averages(types, start_count=10, end_count=10, increment=10,
                 df = df[start_index:]
                 df = df.reset_index(drop=True)
                 datos.append(df['speed'])
+
+        if pedestrians:
+            write_pedestrian_files('data/output/fcd_out.xml', cuantos)
+
         tmp_df = DataFrame(datos).transpose()
         tmp_avg = tmp_df.mean(axis=1)
         promedios[str(cuantos)] = tmp_avg
