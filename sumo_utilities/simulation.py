@@ -81,7 +81,9 @@ def run_simulation(config='data/cars.sumocfg', pedestrians=False,
     options = ["sumo", "--configuration-file=" + config]
     if pedestrians:
         options.append("--pedestrian.model=striping")
-
+        options.append("--fcd-output=data/output/fcd_out.xml")
+        options.append("--fcd-output.geo")
+        
     if emissions:
         options.append("--emission-output=data/output/emissions.xml")
 
