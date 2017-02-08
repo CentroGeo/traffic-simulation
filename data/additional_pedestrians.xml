@@ -1,0 +1,9 @@
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.sf.net/xsd/additional_file.xsd">
+
+	<vTypeProbe id="light" type="car" freq="1" file="output/salida.xml"/>
+	<vTypeProbe id="heavy" type="bus" freq="1" file="output/salida.xml"/>
+    	<vTypeProbe id="heavy_2" type="microbus" freq="1" file="output/salida.xml"/>
+        <inductionLoop id="lane1" lane="-32995#2.299_3" pos="5.12" freq="60" file="output/induction_out.xml"/>
+        <inductionLoop id="lane2" lane="-32995#2.299_2" pos="5.12" freq="60" file="output/induction_out.xml"/>
+        <inductionLoop id="lane3" lane="-32995#2.299_1" pos="5.12" freq="60" file="output/induction_out.xml"/>
+</additional>
