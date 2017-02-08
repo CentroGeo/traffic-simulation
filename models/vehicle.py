@@ -173,7 +173,7 @@ class OutputEmissions():
         """Regresa un DataFrame con las variables para cada timestep."""
 
         d = {'global_timestep': self.timesteps, 'CO2': self.co2,
-             'CO': self.co, 'HC': self.hc, 'NOx': self.nox, 'PMx': self.nox,
+             'CO': self.co, 'HC': self.hc, 'NOx': self.nox, 'PMx': self.pmx,
              'Fuel': self.fuel, 'Noise': self.noise}
         df = DataFrame(d)
         df[['CO2', 'CO', 'HC', 'NOx', 'PMx',
