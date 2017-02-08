@@ -22,13 +22,13 @@ def build_routes(count, interval, vehicle_types,
        param: count int: total de vehículos en la simulación
        param: interval int: Duración de la simulación
        param: vehicle_types list((tipo:str,accel:float,
-                                  deccel:float,prop:float)):
+                                  deccel:float,prop:float,emClass:string)):
                descripción de los tipos de vehículos
                por ejemplo:
-               vehicle_type_proportions = [('car',0.65,0.4,0.85),
-                                           ('suv',0.55,0.4,0.05),
-                                           ('bus',0.45,0.3,0.05),
-                                           ('microbus',0.45,0.3,0.05)]
+               vehicle_type_proportions = [('car',0.65,0.4,'emClass',0.85),
+                                           ('suv',0.55,0.4,'emClass',0.05),
+                                           ('bus',0.45,0.3,'emClass',0.05),
+                                           ('microbus',0.45,0.3,'emClass,'0.05)]
        param: duplicate bool: Si es True entonces se duplica el intervalo y
                               la cuenta de vehículos
     """
@@ -37,8 +37,8 @@ def build_routes(count, interval, vehicle_types,
         interval = 2*interval
         count = 2*count
     for v in vehicle_types:
-        v_type = VehicleType(*v[0:3])
-        number = int(round(v[3] * float(count)))  # cuantos de cada tipo
+        v_type = VehicleType(*v[0:4])
+        number = int(round(v[4] * float(count)))  # cuantos de cada tipo
         flows.append(Flow('f_' + v[0], v_type, "0",
                           str(interval), 'entrance', 'exit',
                           str(number), 'max', 'free', 'best', 'max'))

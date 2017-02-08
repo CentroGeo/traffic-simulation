@@ -18,7 +18,8 @@ class VehicleType():
     str emissionClass: vehicle's emission class
     """
 
-    def __init__(self, v_type, accel=0.65, deccel=0.4, id=None):
+    def __init__(self, v_type, accel=0.65, deccel=0.4,
+                 emissionClass="HBEFA3/PC_G_EU3", id=None):
         """Inicializa un nuevo vehiculo con los parámetros correspondientes
            a str v_type (bus,car,other).
         """
@@ -29,6 +30,7 @@ class VehicleType():
         self.accel = str(accel)
         self.deccel = str(deccel)
         self.v_type = v_type
+        self.emissionClass = emissionClass
 
         if v_type == 'car':
             self.sigma = "0.7"
@@ -37,7 +39,6 @@ class VehicleType():
             self.color = "1,1,0"
             self.speedDev = "0.1"
             self.color = "0,1,0"
-            self.emissionClass = "HBEFA3/PC_G_EU3"
             # self.guiShape = "car"
         elif v_type == 'bus':
             self.sigma = "0.7"
@@ -47,7 +48,6 @@ class VehicleType():
             self.speedDev = "0.1"
             self.color = "0,0,1"
             self.guiShape = "bus"
-            self.emissionClass = "HBEFA3/HDV_D_EU1"
         elif v_type == 'suv':
             self.sigma = "0.7"
             self.length = "7"
@@ -55,7 +55,6 @@ class VehicleType():
             self.color = "0,0,1"
             self.speedDev = "0.1"
             self.color = "1,1,0"
-            self.emissionClass = "HBEFA3/LDV_G_EU3"
         elif v_type == 'microbus':
             self.sigma = "0.7"
             self.length = "15"
@@ -64,7 +63,6 @@ class VehicleType():
             self.speedDev = "0.1"
             self.color = "1,0,0"
             self.guiShape = "bus"
-            self.emissionClass = "HBEFA3/LDV_G_EU0"
         else:
             self.sigma = "0.7"
             self.length = "7.5"
