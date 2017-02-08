@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import matplotlib
 from sumo_utilities.simulation import count_averages, parse_types
+from sumo_utilities.simulation import write_simulation_output
 from sumo_utilities.time_window import zero_crosses, plot_windows
 from sumo_utilities.time_window import time_window_length
 from pandas import DataFrame
@@ -36,3 +37,10 @@ zeroes = zero_crosses(diff, 10, 100, 10)
 graficame = [10, 50, 90]
 colores = ['red', 'green', 'blue']
 plot_windows(graficame, colores, smoothed, diff, counts_dict, zeroes)
+
+
+# Prueba de escritura de archivos
+write_simulation_output(types, 10, net='data/topes_2017_pedestrians.net.xml',
+                        config='data/cars_pedestrians.sumocfg',
+                        pedestrians=True, emissions=True,
+                        write_advisor_files=True)

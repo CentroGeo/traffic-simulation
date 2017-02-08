@@ -184,3 +184,38 @@ def count_averages(types, start_count=10, end_count=10, increment=10,
         promedios[str(cuantos)] = tmp_avg
 
     return (DataFrame(promedios), real_counts)
+
+
+def write_simulation_output(types, cuantos, start_pos=10,
+                            net='data/topes_2017_simple.net.xml',
+                            config='data/cars.sumocfg', pedestrians=False,
+                            emissions=False, write_advisor_files=False):
+    """Corre una simulación y escribe todos los archivos de salida."""
+
+    build_routes(cuantos, 60, types, net=net, duplicate=True)
+    run_simulation(config=config, pedestrians=pedestrians,
+                   emissions=emissions)
+    parsed_vehicles = v_type_probe_parse('data/output/salida.xml')
+    if emissions:
+        parsed_emissions = parse_output_emissions('data/output/emissions.xml')
+        for k, v in parsed_vehicles.items():
+            df = v.as_DataFrame()
+            if emissions:
+                emissions_df = parsed_emissions[k].as_DataFrame()
+            if write_advisor_files:
+                out_path = "data/output/" + str(cuantos)
+                if not os.path.exists(out_path):
+                    os.makedirs(out_path)
+
+                f_name = out_path + "/sumo_" + k.replace('.', '_')[2:] +\
+                    ".csv"
+                df.to_csv(f_name)
+                if emissions:
+                    emissions_df = emissions_df.join(df, how='inner',
+                                                     rsuffix='em')
+                    e_name = out_path + "/emissions_" + \
+                        k.replace('.', '_')[2:] + ".csv"
+                    emissions_df.to_csv(e_name)
+
+        if pedestrians:
+            write_pedestrian_files('data/output/fcd_out.xml', cuantos)
