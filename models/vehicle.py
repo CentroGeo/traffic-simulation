@@ -131,7 +131,8 @@ class OutputVehicle():
         d = {'global_timestep': self.timesteps, 'speed': self.speeds,
              'position': self.positions,
              'lat': [c[0] for c in self.geo_coordinates],
-             'lon': [c[1] for c in self.geo_coordinates]}
+             'lon': [c[1] for c in self.geo_coordinates],
+             'lane': [l.split('_')[-1] for l in self.lanes]}
         df = DataFrame(d)
         df[['position', 'speed', 'lat',
             'lon']] = df[['position', 'speed', 'lat',
