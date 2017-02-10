@@ -40,7 +40,7 @@ plot_windows(graficame, colores, smoothed, diff, counts_dict, zeroes)
 
 
 # Prueba de escritura de archivos
-write_simulation_output(types, 10, net='data/topes_2017_pedestrians.net.xml',
+write_simulation_output(types, 90, net='data/topes_2017_pedestrians.net.xml',
                         config='data/cars_pedestrians.sumocfg',
                         pedestrians=True, emissions=True,
                         write_advisor_files=True)
