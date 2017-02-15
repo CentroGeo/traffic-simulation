@@ -2,7 +2,7 @@
 import matplotlib.pyplot as plt
 import matplotlib
 from pandas import DataFrame
-from sumo_utilities.simulation import count_averages, parse_types
+from sumo_utilities.simulation import cycle_averages, parse_types
 from sumo_utilities.time_window import zero_crosses, plot_windows
 from sumo_utilities.time_window import time_window_length
 matplotlib.style.use('ggplot')
@@ -18,7 +18,7 @@ TYPES = 'data/new_types.csv'
 # Leo los tipos de vehículos
 types = parse_types('data/new_types.csv')
 # Calculo los ciclos promedio para diferentes conteos
-resultado, real_counts = count_averages(types, 10, 100, 10, 80)
+resultado, real_counts = cycle_averages(types, 10, 100, 10, 80)
 # Procesamos los real_counts para producir un DataFrame por cada
 # count original
 counts_dict = {}

@@ -5,7 +5,7 @@ import seaborn as sns
 from pandas import DataFrame
 import pandas as pd
 from sumo_utilities.simulation import build_routes, run_simulation, parse_types
-from sumo_utilities.simulation import count_averages
+from sumo_utilities.simulation import cycle_averages
 from sumo_utilities.driving_cycles import time_average
 from sumo_utilities.driving_cycles import write_advisor_files
 from xml_handlers.parsers.v_type_probe_parser import v_type_probe_parse
@@ -66,6 +66,6 @@ plt.show()
 
 # Incrementar número de vehículos y obtener ciclos promedio para cada conteo
  
-resultado = count_averages(10, 100, 10, types)
+resultado = cycle_averages(10, 100, 10, types)
 resultado.plot()
 plt.show()

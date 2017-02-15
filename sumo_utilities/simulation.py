@@ -123,7 +123,7 @@ def write_pedestrian_files(fcd_path, cuantos):
         ped_df.to_csv(f_name)
 
 
-def count_averages(types, start_count=10, end_count=10, increment=10,
+def cycle_averages(types, start_count=10, end_count=10, increment=10,
                    start_pos=10, net='data/topes_2017_simple.net.xml',
                    config='data/cars.sumocfg', pedestrians=False,
                    emissions=False, write_advisor_files=False):
