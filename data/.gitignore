@@ -4,3 +4,4 @@
 hourly_flows.xml
 # Except this file
 !.gitignore
+!pedestrians.rou.xml
