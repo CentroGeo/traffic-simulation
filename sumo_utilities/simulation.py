@@ -127,7 +127,8 @@ def cycle_averages(types, start_count=10, end_count=10, increment=10,
                    start_pos=10, net='data/topes_2017_simple.net.xml',
                    config='data/cars.sumocfg', pedestrians=False,
                    emissions=False, write_advisor_files=False):
-    """ Regresa un DataFrame con los ciclos promedios para cada simulación
+    """ Regresa un DataFrame con los ciclos promedios para cada simulación,
+        un DataFrame con las emisiones promedio
         y un diccionario con los conteos medidos (induction loop) antes del
         tope.
 
@@ -137,6 +138,7 @@ def cycle_averages(types, start_count=10, end_count=10, increment=10,
     """
     car_counts = list(range(start_count, end_count, increment))
     promedios = {}
+    promedios_emisiones = {}
     real_counts = {}
     for cuantos in car_counts:
         build_routes(cuantos, 60, types, net=net, duplicate=True)
@@ -150,10 +152,11 @@ def cycle_averages(types, start_count=10, end_count=10, increment=10,
         # coches pasan
         real_counts[str(cuantos)] = induction_loop_parser(
                                     'data/output/induction_out.xml')
-        datos = []
+        datos_ciclos = []
+        datos_emisiones = []
         for k, v in parsed_vehicles.items():
             if 'car' in k:
-                df = v.as_DataFrame()
+                df_ciclos = v.as_DataFrame()
                 if emissions:
                     emissions_df = parsed_emissions[k].as_DataFrame()
                 if write_advisor_files:
@@ -163,27 +166,37 @@ def cycle_averages(types, start_count=10, end_count=10, increment=10,
 
                     f_name = out_path + "/sumo_" + k.replace('.', '_')[2:] +\
                         ".csv"
-                    df.to_csv(f_name)
+                    df_ciclos.to_csv(f_name)
                     if emissions:
-                        emissions_df = emissions_df.join(df, how='inner',
+                        emissions_df = emissions_df.join(df_ciclos,
+                                                         how='inner',
                                                          rsuffix='em')
                         e_name = out_path + "/emissions_" + \
                             k.replace('.', '_')[2:] + ".csv"
                         emissions_df.to_csv(e_name)
 
-                start_index = min(df[df['position'] > start_pos].index.tolist())
-                df = df[start_index:]
-                df = df.reset_index(drop=True)
-                datos.append(df['speed'])
+                start_index = min(df_ciclos[df_ciclos['position'] >
+                                            start_pos].index.tolist())
+                df_ciclos = df_ciclos[start_index:]
+                df_ciclos = df_ciclos.reset_index(drop=True)
+                datos_ciclos.append(df_ciclos['speed'])
+                if emissions:
+                    emissions_df = emissions_df[start_index:]
+                    emissions_df = emissions_df.reset_index(drop=True)
+                    datos_emisiones.append(emissions_df['PMx'])
 
         if pedestrians:
             write_pedestrian_files('data/output/fcd_out.xml', cuantos)
 
-        tmp_df = DataFrame(datos).transpose()
+        tmp_df = DataFrame(datos_ciclos).transpose()
         tmp_avg = tmp_df.mean(axis=1)
         promedios[str(cuantos)] = tmp_avg
+        if emissions:
+            tmp_em = DataFrame(datos_emisiones).transpose()
+            avg_em = tmp_em.mean(axis=1)
+            promedios_emisiones[str(cuantos)] = avg_em
 
-    return (DataFrame(promedios), real_counts)
+    return (DataFrame(promedios), DataFrame(promedios_emisiones), real_counts)
 
 
 def write_simulation_output(types, cuantos, start_pos=10,
@@ -199,7 +212,7 @@ def write_simulation_output(types, cuantos, start_pos=10,
     if emissions:
         parsed_emissions = parse_output_emissions('data/output/emissions.xml')
         for k, v in parsed_vehicles.items():
-            df = v.as_DataFrame()
+            df_ciclos = v.as_DataFrame()
             if emissions:
                 emissions_df = parsed_emissions[k].as_DataFrame()
             if write_advisor_files:
@@ -209,9 +222,9 @@ def write_simulation_output(types, cuantos, start_pos=10,
 
                 f_name = out_path + "/sumo_" + k.replace('.', '_')[2:] +\
                     ".csv"
-                df.to_csv(f_name)
+                df_ciclos.to_csv(f_name)
                 if emissions:
-                    emissions_df = emissions_df.join(df, how='inner',
+                    emissions_df = emissions_df.join(df_ciclos, how='inner',
                                                      rsuffix='em')
                     e_name = out_path + "/emissions_" + \
                         k.replace('.', '_')[2:] + ".csv"

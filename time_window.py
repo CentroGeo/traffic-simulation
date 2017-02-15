@@ -18,7 +18,7 @@ TYPES = 'data/new_types.csv'
 # Leo los tipos de vehículos
 types = parse_types('data/new_types.csv')
 # Calculo los ciclos promedio para diferentes conteos
-resultado, real_counts = cycle_averages(types, 10, 100, 10, 80)
+resultado, emisiones, real_counts = cycle_averages(types, 10, 100, 10, 80)
 # Procesamos los real_counts para producir un DataFrame por cada
 # count original
 counts_dict = {}
